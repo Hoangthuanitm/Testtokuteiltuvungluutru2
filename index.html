@@ -1,0 +1,1155 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>宿泊分野特定技能1号評価試験</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+ <style>
+        :root {
+        --font-base: clamp(18px, 3vw, 20px);
+        --font-small: clamp(16px, 2.5vw, 18px);
+        --font-heading: clamp(1.8em, 3.5vw, 2em);
+        --color-primary: #4A90E2;
+        --color-error: #EF4444;
+        --color-text: #333;
+        --color-gray: #6B7280;
+        --transition: 0.2s ease-in-out;
+    }
+    body {
+        font-family: 'Roboto', 'Noto Sans JP', sans-serif;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #F5F7FA;
+        font-size: var(--font-base);
+        line-height: 1.7;
+        color: var(--color-text);
+        overflow-x: auto;
+    }
+    .header {
+        text-align: center;
+        margin-bottom: 25px;
+        padding: 15px;
+        background-color: #FFFFFF;
+        border-radius: 10px;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    }
+    .header h1 {
+        font-size: var(--font-heading);
+        margin: 0;
+        color: var(--color-primary);
+        line-height: 1.3;
+    }
+    .header h2 {
+        font-size: clamp(1.4em, 3vw, 1.6em);
+        margin: 10px 0;
+        color: var(--color-text);
+        line-height: 1.4;
+    }
+    .student-info {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+        border: 1px solid #E0E4EA;
+        padding: 15px;
+        border-radius: 10px;
+        background-color: #FFFFFF;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    }
+    .student-info div {
+        margin: 10px 0;
+    }
+    .student-info label {
+        font-weight: 500;
+        color: var(--color-primary);
+        display: block;
+        font-size: clamp(16px, 3vw, 18px);
+    }
+    .student-info input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #D1D5DB;
+        border-radius: 8px;
+        font-family: 'Roboto', sans-serif;
+        font-size: clamp(16px, 3vw, 18px);
+        transition: border-color var(--transition);
+        box-sizing: border-box;
+        min-height: 48px;
+    }
+    .student-info input:focus {
+        border-color: var(--color-primary);
+        outline: none;
+    }
+    .student-info #date {
+        background-color: #E0E4EA;
+        height: 48px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .question-section {
+        margin-bottom: 20px;
+        background-color: #FFFFFF;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        display: none;
+        max-width: 100%;
+    }
+    .question {
+        margin-bottom: 15px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #E0E4EA;
+    }
+    .options {
+        display: flex;
+        flex-direction: column;
+    }
+    .option {
+        margin: 8px 0;
+        display: flex;
+        align-items: center;
+    }
+    .option input {
+        margin-right: 12px;
+        accent-color: var(--color-primary);
+        transform: scale(1.2);
+    }
+    .option label {
+        font-size: clamp(16px, 3vw, 18px);
+        color: var(--color-text);
+    }
+    .example {
+        background-color: #F9FAFB;
+        padding: 15px;
+        border-left: 4px solid var(--color-primary);
+        margin-bottom: 15px;
+        border-radius: 8px;
+    }
+    h2 {
+        background-color: var(--color-primary);
+        color: #FFFFFF;
+        padding: 12px 15px;
+        border-radius: 8px;
+        font-size: clamp(1.4em, 3vw, 1.6em);
+        margin-top: 0;
+                    text-align: center;
+
+    }
+    button {
+        background-color: var(--color-primary);
+        color: #FFFFFF;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-top: 15px;
+        font-size: clamp(16px, 3vw, 18px);
+        font-family: 'Roboto', sans-serif;
+        transition: background-color var(--transition);
+        min-width: 120px;
+    }
+    button:hover {
+        background-color: #357ABD;
+    }
+    button.reset {
+        background-color: var(--color-error);
+    }
+    button.reset:hover {
+        background-color: #DC2626;
+    }
+    .vietnamese {
+        font-family: 'Roboto', sans-serif;
+        font-style: italic;
+        color: var(--color-gray);
+        margin-bottom: 12px;
+        font-size: var(--font-small);
+    }
+    .result-section {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: #FFFFFF;
+        border-radius: 10px;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        display: none;
+    }
+    .error-message {
+        color: var(--color-error);
+        margin-top: 10px;
+        font-size: var(--font-small);
+    }
+    .result-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+        table-layout: auto;
+        overflow-x: auto;
+        min-width: 600px;
+    }
+    .result-table th,
+    .result-table td {
+        border: 1px solid #E0E4EA;
+        padding: 12px;
+        text-align: left;
+        white-space: nowrap;
+        font-size: clamp(16px, 2.5vw, 18px);
+                    text-align: center;
+
+    }
+    .result-table th {
+        background-color: var(--color-primary);
+        color: #FFFFFF;
+        font-weight: 500;
+    }
+    .result-table tr:nth-child(even) {
+        background-color: #F9FAFB;
+    }
+    .rank-a {
+        color: var(--color-primary);
+        font-weight: 500;
+    }
+    .rank-f {
+        color: var(--color-error);
+        font-weight: 500;
+    }
+    .result-section::-webkit-scrollbar {
+        height: 8px;
+    }
+    .result-section::-webkit-scrollbar-thumb {
+        background-color: var(--color-primary);
+        border-radius: 4px;
+    }
+    .result-section::-webkit-scrollbar-track {
+        background-color: #F5F7FA;
+    }
+    .result-section {
+        scrollbar-width: thin;
+        scrollbar-color: var(--color-primary) #F5F7FA;
+    }
+    .image-placeholder {
+            width: 100%;
+            max-width: 300px;
+            height: 300px;
+            border: 1px dashed #D1D5DB;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 8px 0;
+            background-color: #F9FAFB;
+            font-size: var(--font-small);
+            overflow: hidden;
+        }
+        .image-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    footer {
+        text-align: center;
+        margin-top: 30px;
+        padding: 15px 0;
+        border-top: 1px solid #E0E4EA;
+        color: var(--color-gray);
+        font-size: var(--font-small);
+        font-family: 'Roboto', sans-serif;
+    }
+    .correct-answer {
+        color: var(--color-primary);
+    }
+    .wrong-answer {
+        color: var(--color-error);
+    }
+    .answer-feedback {
+        margin-top: 8px;
+        font-size: var(--font-small);
+        color: var(--color-primary);
+    }
+    .answer-feedback.wrong {
+        color: var(--color-error);
+    }
+    .timer {
+        position: fixed;
+        top: 12px;
+        right: 12px;
+        background-color: var(--color-primary);
+        color: #FFFFFF;
+        padding: 10px 18px;
+        border-radius: 8px;
+        font-size: clamp(14px, 2.8vw, 16px);
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+    }
+    .timer.warning {
+        background-color: var(--color-error);
+    }
+    .password-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+    }
+    .password-box {
+        background-color: #FFFFFF;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        max-width: 90%;
+        width: 320px;
+    }
+    .password-box input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #D1D5DB;
+        border-radius: 8px;
+        font-family: 'Roboto', sans-serif;
+        font-size: clamp(16px, 3vw, 18px);
+        box-sizing: border-box;
+        min-height: 48px;
+    }
+    .password-box input:focus {
+        border-color: var(--color-primary);
+        outline: none;
+    }
+    .password-box button {
+        margin: 10px 6px;
+    }
+    .password-error {
+        color: var(--color-error);
+        font-size: var(--font-small);
+        margin-top: 10px;
+    }
+    .text-input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #D1D5DB;
+        border-radius: 8px;
+        font-family: 'Roboto', sans-serif;
+        font-size: clamp(16px, 3vw, 18px);
+        margin-top: 10px;
+        box-sizing: border-box;
+        min-height: 48px;
+        transition: border-color var(--transition);
+    }
+    .text-input:focus {
+        border-color: var(--color-primary);
+        outline: none;
+    }
+    .button-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+    @media (max-width: 768px) {
+        body {
+            padding: 12px;
+        }
+        .header {
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            font-size: clamp(1.6em, 3.5vw, 1.8em);
+        }
+        .header h2 {
+            font-size: clamp(1.3em, 3vw, 1.5em);
+        }
+        .student-info {
+            padding: 12px;
+        }
+        .student-info input,
+        .student-info label,
+        .option label {
+            font-size: clamp(15px, 2.8vw, 17px);
+        }
+        .student-info #date {
+            background-color: #E0E4EA;
+            height: 48px;
+            width: 95%;
+            box-sizing: border-box;
+        }
+        .question-section {
+            padding: 12px;
+        }
+        .result-section {
+            padding: 12px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            position: relative;
+        }
+        .result-wrapper {
+            margin: 0 12px; /* Căn đều 12px từ cả lề trái và lề phải */
+            overflow-x: auto;
+        }
+        .result-table {
+            width: 768px;
+            min-width: 600px;
+            font-size: clamp(15px, 2.5vw, 17px);
+            table-layout: auto;
+        }
+        .result-table th,
+        .result-table td {
+            padding: 10px;
+            font-size: clamp(15px, 2.5vw, 17px);
+            text-align: center;
+        }
+        .result-section h2 {
+            width: 768px;
+            min-width: 600px;
+            box-sizing: border-box;
+            padding-left: 15px;
+            padding-right: 15px;
+            overflow-x: auto;
+            text-align: center;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: clamp(15px, 2.8vw, 17px);
+            min-width: 100px;
+        }
+        .timer {
+            top: 10px;
+            right: 10px;
+            padding: 8px 15px;
+            font-size: clamp(13px, 2.8vw, 15px);
+        }
+        .image-placeholder {
+            max-width: 100px;
+            height: 80px;
+        }
+        .password-box {
+            width: 90%;
+            padding: 15px;
+        }
+    @media (max-width: 768px) {
+    /* Ngăn trượt ngang cho body */
+    body {
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100vw;
+        box-sizing: border-box;
+    }
+
+    /* Đảm bảo các container chính không vượt quá viewport */
+    .header, .student-info, .question-section, .password-box {
+        max-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
+    }
+
+    /* Sửa .image-placeholder để hiển thị hình ảnh đúng */
+    .image-placeholder {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        min-height: 80px;
+        border: 1px dashed #D1D5DB;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 8px 0;
+        background-color: #F9FAFB;
+        font-size: clamp(14px, 2.5vw, 16px);
+        overflow: hidden;
+        box-sizing: border-box;
+    }
+
+    .image-placeholder img {
+        width: 100%;
+        height: auto;
+        max-height: 100%;
+        object-fit: contain;
+        display: block;
+    }
+
+    /* Sửa input ngày */
+    .student-info #date {
+        width: 95%;
+        max-width: 100%;
+        box-sizing: border-box;
+        height: 48px;
+        background-color: #E0E4EA;
+    }
+
+    /* Điều chỉnh .result-section để thêm khoảng cách cho thanh trượt */
+    .result-section {
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        box-sizing: border-box;
+        padding-bottom: 30px; /* Thêm khoảng cách dưới để đẩy thanh trượt xuống */
+        position: relative;
+    }
+
+    .result-wrapper {
+        max-width: 100%;
+        overflow-x: auto;
+        margin: 0;
+        padding-bottom: 20px; /* Thêm padding để đảm bảo thanh trượt không che nút */
+    }
+
+    .result-table {
+        width: auto;
+        min-width: 600px; /* Giữ trượt ngang */
+        font-size: clamp(15px, 2.5vw, 17px);
+        table-layout: auto;
+    }
+
+    .result-table th,
+    .result-table td {
+        padding: 10px;
+        font-size: clamp(15px, 2.5vw, 17px);
+        text-align: center;
+    }
+
+    .result-section h2 {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        padding: 12px 15px;
+        text-align: center;
+        overflow-x: hidden;
+    }
+
+    /* Đảm bảo nút "Làm lại" hiển thị rõ ràng */
+    button.reset {
+        max-width: 100%;
+        box-sizing: border-box;
+        /* Không thêm margin hoặc position mới để giữ nguyên vị trí */
+    }
+
+    /* Đảm bảo các nút và modal khác không gây trượt ngang */
+    button, .password-box {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Ngăn văn bản dài gây trượt ngang */
+    .question, .option label {
+        word-break: break-all;
+        overflow-wrap: break-word;
+    }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>宿泊分野特定技能1号評価試験</h1>
+        <h2>専門用語-2</h2>
+        <p>時間：60 分</p>
+    </div>
+    <div class="student-info">
+        <div>
+            <label for="name">名前（なまえ）:</label>
+            <input type="text" id="name" name="name">
+        </div>
+        <div>
+            <label for="class">クラス:</label>
+            <input type="text" id="class" name="class">
+        </div>
+        <div>
+            <label for="date">日付:</label>
+            <input type="date" id="date" name="date">
+        </div>
+    </div>
+    <div class="button-container">
+        <button id="start-test" type="button">Bắt đầu làm bài</button>
+        <button id="history-test" type="button" onclick="window.showPasswordModal()">Lịch sử kiểm tra</button>
+    </div>
+    <div id="message-info" class="error-message"></div>
+    <div id="timer" class="timer" style="display: none;">Thời gian còn lại: 60:00</div>
+    <div class="question-section" id="question-section">
+        <!-- Questions will be dynamically inserted here -->
+    </div>
+    <button id="submit-test" type="button" style="display: none;">テストを提出する (Nộp bài)</button>
+    <div id="message-result" class="error-message"></div>
+    <div class="result-section" id="results">
+    <div class="result-wrapper">
+        <h2>採点結果 (Kết quả)</h2>
+        <table class="result-table">
+            <!-- Nội dung bảng -->
+        </table>
+        <div id="score-display"></div>
+    </div>
+    </div>
+    <div class="password-modal" id="password-modal">
+        <div class="password-box">
+            <h2>Nhập mật khẩu</h2>
+            <input type="password" id="password-input" placeholder="Mật khẩu">
+            <div>
+                <button onclick="window.checkPassword()">Xác nhận</button>
+                <button onclick="window.closePasswordModal()">Quay lại</button>
+            </div>
+            <div id="password-error" class="password-error"></div>
+        </div>
+    </div>
+    <footer>
+        <p>© 2025 Tài liệu kiểm tra | Thiết kế bởi Thuận</p>
+    </footer>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAfy4QMD9_7PyFHpInNdKDRWuW4AYCtLJ4",
+            authDomain: "history-e4633.firebaseapp.com",
+            projectId: "history-e4633",
+            storageBucket: "history-e4633.firebasestorage.app",
+            messagingSenderId: "331974436893",
+            appId: "1:331974436893:web:10c3c6adf7b66d2b5fbef4",
+            measurementId: "G-DC055090BW"
+        };
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        // Tự động đặt ngày hiện tại cho trường date
+        document.addEventListener('DOMContentLoaded', () => {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('date').value = today;
+        });
+        // Question and answer key data
+const answerKey = {
+  1: 'A',
+  2: 'B',
+  3: 'B',
+  4: 'A',
+  5: 'A',
+  6: 'A',
+  7: 'A',
+  8: 'A',
+  9: 'A',
+  10: 'A',
+  11: 'A',
+  12: 'A',
+  13: 'A',
+  14: 'A',
+  15: 'A',
+  16: 'A',
+  17: 'A',
+  18: 'A',
+  19: 'A',
+  20: 'A',
+  21: 'A',
+  22: 'A',
+  23: 'A',
+  24: 'A',
+  25: 'A',
+  26: 'A',
+  27: 'A',
+  28: 'A',
+  29: 'A',
+  30: 'A',
+  31: 'A',
+  32: 'A',
+  33: 'A',
+  34: 'A',
+  35: 'A',
+  36: 'A',
+  37: 'A',
+  38: 'A',
+  39: 'A',
+  40: 'A',
+  41: 'A',
+  42: 'A',
+  43: 'A',
+  44: 'A',
+  45: 'A',
+  46: 'A',
+  47: 'A',
+  48: 'A',
+  49: 'A',
+  50: 'A',
+  51: 'A',
+  52: 'A',
+  53: 'A',
+  54: 'A',
+  55: 'A',
+  56: 'A',
+  57: 'A',
+  58: 'A',
+  59: 'A',
+  60: 'A',
+  61: 'A',
+  62: 'A',
+  63: 'A',
+  64: 'A',
+  65: 'A',
+  66: 'A',
+  67: 'A',
+  68: 'A',
+  69: 'A',
+  70: 'A',
+  71: 'A',
+  72: 'A',
+  73: 'A',
+  74: 'A',
+  75: 'A',
+  76: 'A',
+  77: 'A',
+  78: 'A',
+  79: 'A',
+  80: 'A',
+  81: 'A',
+  82: 'A',
+  83: 'A',
+  84: 'A',
+  85: 'A',
+  86: 'A',
+  87: 'A',
+  88: 'A',
+  89: 'A',
+  90: 'A',
+  91: 'A',
+  92: 'A',
+  93: 'A',
+  94: 'A',
+  95: 'A',
+  96: 'A',
+  97: 'A',
+  98: 'A',
+  99: 'A',
+  100: 'A',
+  101: 'A',
+  102: 'A',
+  103: 'A',
+  104: 'A',
+  105: 'A',
+  106: 'A',
+  107: 'A',
+  108: 'A',
+  109: 'A'
+};
+
+
+const questions = [
+    { id: 1, text: 'ホテルの「フロント」とはどのような<ruby><rb>場所</rb><rt>ばしょ</rt></ruby>ですか。<ruby><rb>正</rb><rt>ただ</rt></ruby>しいものを<ruby><rb>一つ選</rb><rt>ひとつえら</rt></ruby>びなさい。', options: ['A. お<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>がチェックイン・チェックアウトをする<ruby><rb>所</rb><rt>ところ</rt></ruby>', 'B. <ruby><rb>食事</rb><rt>しょくじ</rt></ruby>をする<ruby><rb>所</rb><rt>ところ</rt></ruby>', 'C. <ruby><rb>掃除</rb><rt>そうじ</rt></ruby>をする<ruby><rb>所</rb><rt>ところ</rt></ruby>'], explanation: '' },
+    { id: 2, text: '「シーツ」を<ruby><rb>交換</rb><rt>こうかん</rt></ruby>するのはどのような<ruby><rb>作業</rb><rt>さぎょう</rt></ruby>ですか。<ruby><rb>正</rb><rt>ただ</rt></ruby>しいものを<ruby><rb>一つ選</rb><rt>ひとつえら</rt></ruby>びなさい。', options: ['A. <ruby><rb>部屋</rb><rt>へや</rt></ruby>の<ruby><rb>窓</rb><rt>まど</rt></ruby>を<ruby><rb>掃除</rb><rt>そうじ</rt></ruby>する', 'B. ベッドのカバーを<ruby><rb>取</rb><rt>と</rt></ruby>り<ruby><rb>替</rb><rt>か</rt></ruby>える', 'C. <ruby><rb>ゴミ</rb><rt>ごみ</rt></ruby>を<ruby><rb>集</rb><rt>あつ</rt></ruby>める'], explanation: '' },
+    { id: 3, text: 'ホテルで「チェックアウト」とは<ruby><rb>何</rb><rt>なに</rt></ruby>を<ruby><rb>意味</rb><rt>いみ</rt></ruby>しますか。<ruby><rb>正</rb><rt>ただ</rt></ruby>しいものを<ruby><rb>一つ選</rb><rt>ひとつえら</rt></ruby>びなさい。', options: ['A. <ruby><rb>部屋</rb><rt>へや</rt></ruby>を<ruby><rb>掃除</rb><rt>そうじ</rt></ruby>する', 'B. <ruby><rb>宿泊料金</rb><rt>しゅくはくりょうきん</rt></ruby>を<ruby><rb>支払</rb><rt>しはら</rt></ruby>って<ruby><rb>退室</rb><rt>たいしつ</rt></ruby>する', 'C. <ruby><rb>新</rb><rt>あたら</rt></ruby>しいお<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>を<ruby><rb>迎</rb><rt>むか</rt></ruby>える'], explanation: '' },
+    { id: 4, text: '「アメニティ」とは<ruby><rb>何</rb><rt>なに</rt></ruby>を<ruby><rb>指</rb><rt>さ</rt></ruby>しますか。<ruby><rb>正</rb><rt>ただ</rt></ruby>しいものを<ruby><rb>一つ選</rb><rt>ひとつえら</rt></ruby>びなさい。', options: ['A. お<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>に<ruby><rb>提供</rb><rt>ていきょう</rt></ruby>される<ruby><rb>歯</rb><rt>は</rt></ruby>ブラシやシャンプーなど', 'B. ホテルの<ruby><rb>入口</rb><rt>いりぐち</rt></ruby>', 'C. <ruby><rb>食事</rb><rt>しょくじ</rt></ruby>の<ruby><rb>時間</rb><rt>じかん</rt></ruby>'], explanation: '' },
+    { id: 5, text: '「ベルボーイ」の<ruby><rb>仕事</rb><rt>しごと</rt></ruby>は<ruby><rb>何</rb><rt>なに</rt></ruby>ですか。<ruby><rb>正</rb><rt>ただ</rt></ruby>しいものを<ruby><rb>一つ選</rb><rt>ひとつえら</rt></ruby>びなさい。', options: ['A. お<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>の<ruby><rb>荷物</rb><rt>にもつ</rt></ruby>を<ruby><rb>運</rb><rt>はこ</rt></ruby>ぶ', 'B. <ruby><rb>部屋</rb><rt>へや</rt></ruby>を<ruby><rb>清掃</rb><rt>せいそう</rt></ruby>する', 'C. <ruby><rb>料理</rb><rt>りょうり</rt></ruby>を<ruby><rb>作</rb><rt>つく</rt></ruby>る'], explanation: '' },
+    { id: 6, text: '「ルームサービス」とはどんなサービスですか。<ruby><rb>正</rb><rt>ただ</rt></ruby>しいものを<ruby><rb>一つ選</rb><rt>ひとつえら</rt></ruby>びなさい。', options: ['A. <ruby><rb>部屋</rb><rt>へや</rt></ruby>で<ruby><rb>食事</rb><rt>しょくじ</rt></ruby>や<ruby><rb>飲</rb><rt>の</rt></ruby>み<ruby><rb>物</rb><rt>もの</rt></ruby>を<ruby><rb>提供</rb><rt>ていきょう</rt></ruby>する', 'B. <ruby><rb>部屋</rb><rt>へや</rt></ruby>の<ruby><rb>掃除</rb><rt>そうじ</rt></ruby>をする', 'C. <ruby><rb>部屋</rb><rt>へや</rt></ruby>の<ruby><rb>修理</rb><rt>しゅうり</rt></ruby>をする'], explanation: '' },
+    { id: 7, text: '「ハウスキーピング」とはどんな<ruby><rb>仕事</rb><rt>しごと</rt></ruby>ですか。<ruby><rb>正</rb><rt>ただ</rt></ruby>しいものを<ruby><rb>一つ選</rb><rt>ひとつえら</rt></ruby>びなさい。', options: ['A. <ruby><rb>部屋</rb><rt>へや</rt></ruby>の<ruby><rb>清掃</rb><rt>せいそう</rt></ruby>や<ruby><rb>整備</rb><rt>せいび</rt></ruby>を<ruby><rb>行</rb><rt>おこな</rt></ruby>う', 'B. <ruby><rb>宿泊料金</rb><rt>しゅくはくりょうきん</rt></ruby>を<ruby><rb>受</rb><rt>う</rt></ruby>け<ruby><rb>取</rb><rt>と</rt></ruby>る', 'C. お<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>を<ruby><rb>案内</rb><rt>あんない</rt></ruby>する'], explanation: '' },
+    { id: 8, text: '「レストランのホールスタッフ」の<ruby><rb>主</rb><rt>おも</rt></ruby>な<ruby><rb>仕事</rb><rt>しごと</rt></ruby>は<ruby><rb>何</rb><rt>なに</rt></ruby>ですか。', options: ['A. お<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>を<ruby><rb>席</rb><rt>せき</rt></ruby>に<ruby><rb>案内</rb><rt>あんない</rt></ruby>し、<ruby><rb>注文</rb><rt>ちゅうもん</rt></ruby>を<ruby><rb>取</rb><rt>と</rt></ruby>る', 'B. <ruby><rb>食器</rb><rt>しょっき</rt></ruby>を<ruby><rb>洗</rb><rt>あら</rt></ruby>う', 'C. メニューを<ruby><rb>作</rb><rt>つく</rt></ruby>る'], explanation: '' },
+    { id: 9, text: '「<ruby><rb>予約</rb><rt>よやく</rt></ruby>」とは<ruby><rb>何</rb><rt>なに</rt></ruby>を<ruby><rb>意味</rb><rt>いみ</rt></ruby>しますか。', options: ['A. <ruby><rb>事前</rb><rt>じぜん</rt></ruby>に<ruby><rb>部屋</rb><rt>へや</rt></ruby>や<ruby><rb>席</rb><rt>せき</rt></ruby>を<ruby><rb>確保</rb><rt>かくほ</rt></ruby>すること', 'B. <ruby><rb>宿泊料金</rb><rt>しゅくはくりょうきん</rt></ruby>を<ruby><rb>払</rb><rt>はら</rt></ruby>うこと', 'C. <ruby><rb>部屋</rb><rt>へや</rt></ruby>を<ruby><rb>掃除</rb><rt>そうじ</rt></ruby>すること'], explanation: '' },
+    { id: 10, text: '「キャンセル」とは<ruby><rb>何</rb><rt>なに</rt></ruby>を<ruby><rb>意味</rb><rt>いみ</rt></ruby>しますか。', options: ['A. <ruby><rb>予約</rb><rt>よやく</rt></ruby>を<ruby><rb>取</rb><rt>と</rt></ruby>り<ruby><rb>消</rb><rt>け</rt></ruby>すこと', 'B. <ruby><rb>部屋</rb><rt>へや</rt></ruby>を<ruby><rb>変更</rb><rt>へんこう</rt></ruby>すること', 'C. <ruby><rb>宿泊期間</rb><rt>しゅくはくきかん</rt></ruby>を<ruby><rb>延</rb><rt>の</rt></ruby>ばすこと'], explanation: '' },
+    { id: 11, text: '「<ruby><rb>延泊</rb><rt>えんぱく</rt></ruby>」とは<ruby><rb>何</rb><rt>なに</rt></ruby>を<ruby><rb>意味</rb><rt>いみ</rt></ruby>しますか。', options: ['A. <ruby><rb>宿泊日数</rb><rt>しゅくはくにっすう</rt></ruby>を<ruby><rb>増</rb><rt>ふ</rt></ruby>やすこと', 'B. <ruby><rb>宿泊</rb><rt>しゅくはく</rt></ruby>を<ruby><rb>取</rb><rt>と</rt></ruby>り<ruby><rb>消</rb><rt>け</rt></ruby>すこと', 'C. <ruby><rb>部屋</rb><rt>へや</rt></ruby>を<ruby><rb>変更</rb><rt>へんこう</rt></ruby>すること'], explanation: '' },
+    { id: 12, text: '「<ruby><rb>空室</rb><rt>くうしつ</rt></ruby>」とは<ruby><rb>何</rb><rt>なに</rt></ruby>を<ruby><rb>意味</rb><rt>いみ</rt></ruby>しますか。', options: ['A. <ruby><rb>使用</rb><rt>しよう</rt></ruby>されていない<ruby><rb>部屋</rb><rt>へや</rt></ruby>', 'B. <ruby><rb>掃除中</rb><rt>せいそうちゅう</rt></ruby>の<ruby><rb>部屋</rb><rt>へや</rt></ruby>', 'C. <ruby><rb>満室</rb><rt>まんしつ</rt></ruby>の<ruby><rb>部屋</rb><rt>へや</rt></ruby>'], explanation: '' },
+    { id: 13, text: '「<ruby><rb>満室</rb><rt>まんしつ</rt></ruby>」とは<ruby><rb>何</rb><rt>なに</rt></ruby>を<ruby><rb>意味</rb><rt>いみ</rt></ruby>しますか。', options: ['A. <ruby><rb>全</rb><rt>すべ</rt></ruby>ての<ruby><rb>部屋</rb><rt>へや</rt></ruby>が<ruby><rb>利用中</rb><rt>りようちゅう</rt></ruby>で<ruby><rb>空</rb><rt>あ</rt></ruby>きがない', 'B. <ruby><rb>部屋</rb><rt>へや</rt></ruby>が<ruby><rb>掃除</rb><rt>そうじ</rt></ruby>されている', 'C. <ruby><rb>部屋</rb><rt>へや</rt></ruby>が<ruby><rb>予約済</rb><rt>よやくず</rt></ruby>みだが<ruby><rb>使</rb><rt>つか</rt></ruby>われていない'], explanation: '' },
+    { id: 14, text: '「シングルルーム」とはどんな<ruby><rb>部屋</rb><rt>へや</rt></ruby>ですか。', options: ['A. <ruby><rb>一人用</rb><rt>ひとりよう</rt></ruby>の<ruby><rb>部屋</rb><rt>へや</rt></ruby>', 'B. <ruby><rb>二人用</rb><rt>ふたりよう</rt></ruby>の<ruby><rb>部屋</rb><rt>へや</rt></ruby>', 'C. <ruby><rb>家族用</rb><rt>かぞくよう</rt></ruby>の<ruby><rb>部屋</rb><rt>へや</rt></ruby>'], explanation: '' },
+    { id: 15, text: '「ツインルーム」とはどんな<ruby><rb>部屋</rb><rt>へや</rt></ruby>ですか。', options: ['A. ベッドが２つある<ruby><rb>部屋</rb><rt>へや</rt></ruby>', 'B. ベッドが１つある<ruby><rb>部屋</rb><rt>へや</rt></ruby>', 'C. <ruby><rb>和室</rb><rt>わしつ</rt></ruby>'], explanation: '' },
+    { id: 16, text: '「チェックイン」のときに<ruby><rb>必要</rb><rt>ひつよう</rt></ruby>なことは<ruby><rb>何</rb><rt>なに</rt></ruby>ですか。', options: ['A. <ruby><rb>宿泊者</rb><rt>しゅくはくしゃ</rt></ruby>の<ruby><rb>名前</rb><rt>なまえ</rt></ruby>や<ruby><rb>住所</rb><rt>じゅうしょ</rt></ruby>を<ruby><rb>記入</rb><rt>きにゅう</rt></ruby>する', 'B. <ruby><rb>部屋</rb><rt>へや</rt></ruby>を<ruby><rb>掃除</rb><rt>そうじ</rt></ruby>する', 'C. <ruby><rb>荷物</rb><rt>にもつ</rt></ruby>を<ruby><rb>運</rb><rt>はこ</rt></ruby>ぶ'], explanation: '' },
+    { id: 17, text: '「<ruby><rb>領収書</rb><rt>りょうしゅうしょ</rt></ruby>」とは<ruby><rb>何</rb><rt>なに</rt></ruby>ですか。', options: ['A. <ruby><rb>支払</rb><rt>しはら</rt></ruby>ったお<ruby><rb>金</rb><rt>かね</rt></ruby>を<ruby><rb>証明</rb><rt>しょうめい</rt></ruby>する<ruby><rb>書類</rb><rt>しょるい</rt></ruby>', 'B. <ruby><rb>予約</rb><rt>よやく</rt></ruby>の<ruby><rb>確認書</rb><rt>かくにんしょ</rt></ruby>', 'C. <ruby><rb>部屋</rb><rt>へや</rt></ruby>の<ruby><rb>案内図</rb><rt>あんないず</rt></ruby>'], explanation: '' },
+    { id: 18, text: '「<ruby><rb>案内</rb><rt>あんない</rt></ruby>」とは<ruby><rb>何</rb><rt>なに</rt></ruby>を<ruby><rb>意味</rb><rt>いみ</rt></ruby>しますか。', options: ['A. お<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>を<ruby><rb>場所</rb><rt>ばしょ</rt></ruby>や<ruby><rb>部屋</rb><rt>へや</rt></ruby>に<ruby><rb>導</rb><rt>みちび</rt></ruby>くこと', 'B. <ruby><rb>部屋</rb><rt>へや</rt></ruby>を<ruby><rb>掃除</rb><rt>そうじ</rt></ruby>すること', 'C. <ruby><rb>料理</rb><rt>りょうり</rt></ruby>を<ruby><rb>作</rb><rt>つく</rt></ruby>ること'], explanation: '' },
+    { id: 19, text: '「<ruby><rb>苦情</rb><rt>くじょう</rt></ruby>」とは<ruby><rb>何</rb><rt>なに</rt></ruby>ですか。', options: ['A. お<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>からの<ruby><rb>不満</rb><rt>ふまん</rt></ruby>や<ruby><rb>文句</rb><rt>もんく</rt></ruby>', 'B. お<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>の<ruby><rb>要望</rb><rt>ようぼう</rt></ruby>', 'C. お<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>の<ruby><rb>感謝</rb><rt>かんしゃ</rt></ruby>'], explanation: '' },
+    { id: 20, text: '「<ruby><rb>忘</rb><rt>わす</rt></ruby>れ<ruby><rb>物</rb><rt>もの</rt></ruby>」が<ruby><rb>見</rb><rt>み</rt></ruby>つかったとき、どうすればよいですか。', options: ['A. フロントに<ruby><rb>届</rb><rt>とど</rt></ruby>ける', 'B. <ruby><rb>捨</rb><rt>す</rt></ruby>てる', 'C. <ruby><rb>自分</rb><rt>じぶん</rt></ruby>で<ruby><rb>使</rb><rt>つか</rt></ruby>う'], explanation: '' },
+    { id: 21, text: '「<ruby><rb>両替</rb><rt>りょうがえ</rt></ruby>」とは<ruby><rb>何</rb><rt>なに</rt></ruby>を<ruby><rb>意味</rb><rt>いみ</rt></ruby>しますか。', options: ['A. <ruby><rb>外国</rb><rt>がいこく</rt></ruby>のお<ruby><rb>金</rb><rt>かね</rt></ruby>を<ruby><rb>日本円</rb><rt>にほんえん</rt></ruby>や<ruby><rb>別</rb><rt>べつ</rt></ruby>の<ruby><rb>通貨</rb><rt>つうか</rt></ruby>に<ruby><rb>換</rb><rt>か</rt></ruby>えること', 'B. <ruby><rb>宿泊料金</rb><rt>しゅくはくりょうきん</rt></ruby>を<ruby><rb>払</rb><rt>はら</rt></ruby>うこと', 'C. お<ruby><rb>釣</rb><rt>つ</rt></ruby>りを<ruby><rb>受</rb><rt>う</rt></ruby>け<ruby><rb>取</rb><rt>と</rt></ruby>ること'], explanation: '' },
+    { id: 22, text: '「<ruby><rb>貴重品</rb><rt>きちょうひん</rt></ruby>」はどのように<ruby><rb>扱</rb><rt>あつか</rt></ruby>いますか。', options: ['A. <ruby><rb>金庫</rb><rt>きんこ</rt></ruby>やフロントで<ruby><rb>安全</rb><rt>あんぜん</rt></ruby>に<ruby><rb>保管</rb><rt>ほかん</rt></ruby>する', 'B. <ruby><rb>部屋</rb><rt>へや</rt></ruby>の<ruby><rb>机</rb><rt>つくえ</rt></ruby>に<ruby><rb>置</rb><rt>お</rt></ruby>く', 'C. ベッドの<ruby><rb>下</rb><rt>した</rt></ruby>に<ruby><rb>隠</rb><rt>かく</rt></ruby>す'], explanation: '' },
+    { id: 23, text: '「<ruby><rb>禁煙</rb><rt>きんえん</rt></ruby>」のマークがある<ruby><rb>場所</rb><rt>ばしょ</rt></ruby>ではどうすればいいですか。', options: ['A. タバコを<ruby><rb>吸</rb><rt>す</rt></ruby>ってはいけない', 'B. タバコを<ruby><rb>吸</rb><rt>す</rt></ruby>ってもいい', 'C. タバコを<ruby><rb>売</rb><rt>う</rt></ruby>ることができる'], explanation: '' },
+    { id: 24, text: '「エレベーター」が<ruby><rb>故障</rb><rt>こしょう</rt></ruby>したとき、お<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>にどう<ruby><rb>案内</rb><rt>あんない</rt></ruby>しますか。', options: ['A. <ruby><rb>階段</rb><rt>かいだん</rt></ruby>を<ruby><rb>利用</rb><rt>りよう</rt></ruby>するように<ruby><rb>伝</rb><rt>つた</rt></ruby>える', 'B. <ruby><rb>部屋</rb><rt>へや</rt></ruby>に<ruby><rb>戻</rb><rt>もど</rt></ruby>るように<ruby><rb>伝</rb><rt>つた</rt></ruby>える', 'C. <ruby><rb>外</rb><rt>そと</rt></ruby>に<ruby><rb>出</rb><rt>で</rt></ruby>るように<ruby><rb>伝</rb><rt>つた</rt></ruby>える'], explanation: '' },
+    { id: 25, text: '「<ruby><rb>大浴場</rb><rt>だいよくじょう</rt></ruby>」とは<ruby><rb>何</rb><rt>なに</rt></ruby>ですか。', options: ['A. たくさんのお<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>が<ruby><rb>一緒</rb><rt>いっしょ</rt></ruby>に<ruby><rb>利用</rb><rt>りよう</rt></ruby>できる<ruby><rb>大</rb><rt>おお</rt></ruby>きなお<ruby><rb>風呂</rb><rt>ふろ</rt></ruby>', 'B. <ruby><rb>部屋</rb><rt>へや</rt></ruby>の<ruby><rb>中</rb><rt>なか</rt></ruby>の<ruby><rb>小</rb><rt>ちい</rt></ruby>さなお<ruby><rb>風呂</rb><rt>ふろ</rt></ruby>', 'C. シャワーだけの<ruby><rb>部屋</rb><rt>へや</rt></ruby>'], explanation: '' },
+    { id: 26, text: '「タオル<ruby><rb>交換</rb><rt>こうかん</rt></ruby>」を<ruby><rb>頼</rb><rt>たの</rt></ruby>まれたらどうしますか。', options: ['A. <ruby><rb>新</rb><rt>あたら</rt></ruby>しいタオルを<ruby><rb>持</rb><rt>も</rt></ruby>って<ruby><rb>行</rb><rt>い</rt></ruby>く', 'B. タオルを<ruby><rb>洗</rb><rt>あら</rt></ruby>ってから<ruby><rb>返</rb><rt>かえ</rt></ruby>す', 'C. タオルを<ruby><rb>部屋</rb><rt>へや</rt></ruby>に<ruby><rb>置</rb><rt>お</rt></ruby>いたままにする'], explanation: '' },
+    { id: 27, text: '「<ruby><rb>朝食付</rb><rt>ちょうしょくつ</rt></ruby>きプラン」とは<ruby><rb>何</rb><rt>なに</rt></ruby>を<ruby><rb>意味</rb><rt>いみ</rt></ruby>しますか。', options: ['A. <ruby><rb>宿泊</rb><rt>しゅくはく</rt></ruby>と<ruby><rb>一緒</rb><rt>いっしょ</rt></ruby>に<ruby><rb>朝</rb><rt>あさ</rt></ruby>ごはんが<ruby><rb>提供</rb><rt>ていきょう</rt></ruby>されるプラン', 'B. <ruby><rb>昼</rb><rt>ひる</rt></ruby>ごはんがついているプラン', 'C. <ruby><rb>食事</rb><rt>しょくじ</rt></ruby>が<ruby><rb>全</rb><rt>まった</rt></ruby>くつかないプラン'], explanation: '' },
+    { id: 28, text: '「<ruby><rb>布団</rb><rt>ふとん</rt></ruby>」を<ruby><rb>敷</rb><rt>し</rt></ruby>く<ruby><rb>作業</rb><rt>さぎょう</rt></ruby>を<ruby><rb>何</rb><rt>なに</rt></ruby>といいますか。', options: ['A. <ruby><rb>布団敷</rb><rt>ふとんし</rt></ruby>き', 'B. <ruby><rb>掃除</rb><rt>そうじ</rt></ruby>', 'C. <ruby><rb>洗濯</rb><rt>せんたく</rt></ruby>'], explanation: '' },
+    { id: 29, text: '「チェックアウト<ruby><rb>時間</rb><rt>じかん</rt></ruby>」を<ruby><rb>過</rb><rt>す</rt></ruby>ぎたらどうなりますか。', options: ['A. <ruby><rb>追加料金</rb><rt>ついかりょうきん</rt></ruby>がかかる<ruby><rb>場合</rb><rt>ばあい</rt></ruby>がある', 'B. <ruby><rb>無料</rb><rt>むりょう</rt></ruby>で<ruby><rb>延長</rb><rt>えんちょう</rt></ruby>できる', 'C. <ruby><rb>自動的</rb><rt>じどうてき</rt></ruby>に<ruby><rb>次</rb><rt>つぎ</rt></ruby>の<ruby><rb>日</rb><rt>ひ</rt></ruby>も<ruby><rb>泊</rb><rt>と</rt></ruby>まれる'], explanation: '' },
+    { id: 30, text: '「エアコン」が<ruby><rb>故障</rb><rt>こしょう</rt></ruby>したとき、まず<ruby><rb>何</rb><rt>なに</rt></ruby>をしますか。', options: ['A. フロントや<ruby><rb>責任者</rb><rt>せきにんしゃ</rt></ruby>に<ruby><rb>報告</rb><rt>ほうこく</rt></ruby>する', 'B. <ruby><rb>自分</rb><rt>じぶん</rt></ruby>で<ruby><rb>修理</rb><rt>しゅうり</rt></ruby>する', 'C. そのまま<ruby><rb>放置</rb><rt>ほうち</rt></ruby>する'], explanation: '' },
+    { id: 31, text: '「クレーム<ruby><rb>対応</rb><rt>たいおう</rt></ruby>」で<ruby><rb>大切</rb><rt>たいせつ</rt></ruby>なことは<ruby><rb>何</rb><rt>なに</rt></ruby>ですか。', options: ['A. お<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>の<ruby><rb>話</rb><rt>はなし</rt></ruby>をよく<ruby><rb>聞</rb><rt>き</rt></ruby>いて<ruby><rb>丁寧</rb><rt>ていねい</rt></ruby>に<ruby><rb>対応</rb><rt>たいおう</rt></ruby>する', 'B. できるだけ<ruby><rb>早</rb><rt>はや</rt></ruby>く<ruby><rb>話</rb><rt>はなし</rt></ruby>を<ruby><rb>終</rb><rt>お</rt></ruby>わらせる', 'C. お<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>の<ruby><rb>意見</rb><rt>いけん</rt></ruby>を<ruby><rb>否定</rb><rt>ひてい</rt></ruby>する'], explanation: '' },
+    { id: 32, text: '「<ruby><rb>領収書</rb><rt>りょうしゅうしょ</rt></ruby>」を<ruby><rb>希望</rb><rt>きぼう</rt></ruby>するお<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>にどう<ruby><rb>対応</rb><rt>たいおう</rt></ruby>しますか。', options: ['A. <ruby><rb>名前</rb><rt>なまえ</rt></ruby>や<ruby><rb>金額</rb><rt>きんがく</rt></ruby>を<ruby><rb>記入</rb><rt>きにゅう</rt></ruby>して<ruby><rb>発行</rb><rt>はっこう</rt></ruby>する', 'B. <ruby><rb>発行</rb><rt>はっこう</rt></ruby>できないと<ruby><rb>伝</rb><rt>つた</rt></ruby>える', 'C. メモ<ruby><rb>用紙</rb><rt>ようし</rt></ruby>に<ruby><rb>金額</rb><rt>きんがく</rt></ruby>を<ruby><rb>書</rb><rt>か</rt></ruby>く'], explanation: '' },
+    { id: 33, text: '「<ruby><rb>非常口</rb><rt>ひじょうぐち</rt></ruby>」の<ruby><rb>役割</rb><rt>やくわり</rt></ruby>は<ruby><rb>何</rb><rt>なに</rt></ruby>ですか。', options: ['A. <ruby><rb>火事</rb><rt>かじ</rt></ruby>や<ruby><rb>地震</rb><rt>じしん</rt></ruby>などの<ruby><rb>緊急時</rb><rt>きんきゅうじ</rt></ruby>に<ruby><rb>避難</rb><rt>ひなん</rt></ruby>する<ruby><rb>出口</rb><rt>でぐち</rt></ruby>', 'B. <ruby><rb>荷物</rb><rt>にもつ</rt></ruby>を<ruby><rb>運</rb><rt>はこ</rt></ruby>ぶための<ruby><rb>出口</rb><rt>でぐち</rt></ruby>', 'C. <ruby><rb>従業員</rb><rt>じゅうぎょういん</rt></ruby>だけが<ruby><rb>使</rb><rt>つか</rt></ruby>う<ruby><rb>出口</rb><rt>でぐち</rt></ruby>'], explanation: '' },
+    { id: 34, text: '「<ruby><rb>避難訓練</rb><rt>ひなんくんれん</rt></ruby>」の<ruby><rb>目的</rb><rt>もくてき</rt></ruby>は<ruby><rb>何</rb><rt>なに</rt></ruby>ですか。', options: ['A. <ruby><rb>災害</rb><rt>さいがい</rt></ruby>のときに<ruby><rb>安全</rb><rt>あんぜん</rt></ruby>に<ruby><rb>避難</rb><rt>ひなん</rt></ruby>できるように<ruby><rb>練習</rb><rt>れんしゅう</rt></ruby>すること', 'B. <ruby><rb>掃除</rb><rt>そうじ</rt></ruby>の<ruby><rb>練習</rb><rt>れんしゅう</rt></ruby>をすること', 'C. <ruby><rb>荷物</rb><rt>にもつ</rt></ruby>を<ruby><rb>運</rb><rt>はこ</rt></ruby>ぶ<ruby><rb>練習</rb><rt>れんしゅう</rt></ruby>をすること'], explanation: '' },
+    { id: 35, text: '「<ruby><rb>貸金庫</rb><rt>かしきんこ</rt></ruby>」とはどのようなものですか。', options: ['A. お<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>の<ruby><rb>貴重品</rb><rt>きちょうひん</rt></ruby>を<ruby><rb>安全</rb><rt>あんぜん</rt></ruby>に<ruby><rb>保管</rb><rt>ほかん</rt></ruby>するための<ruby><rb>箱</rb><rt>はこ</rt></ruby>', 'B. お<ruby><rb>金</rb><rt>かね</rt></ruby>を<ruby><rb>借</rb><rt>か</rt></ruby>りるところ', 'C. お<ruby><rb>金</rb><rt>かね</rt></ruby>を<ruby><rb>両替</rb><rt>りょうがえ</rt></ruby>するところ'], explanation: '' },
+    { id: 36, text: '「<ruby><rb>予約確認書</rb><rt>よやくかくにんしょ</rt></ruby>」には<ruby><rb>何</rb><rt>なに</rt></ruby>が<ruby><rb>書</rb><rt>か</rt></ruby>かれていますか。', options: ['A. <ruby><rb>宿泊日</rb><rt>しゅくはくび</rt></ruby>、<ruby><rb>人数</rb><rt>にんずう</rt></ruby>、<ruby><rb>料金</rb><rt>りょうきん</rt></ruby>などの<ruby><rb>情報</rb><rt>じょうほう</rt></ruby>', 'B. <ruby><rb>部屋</rb><rt>へや</rt></ruby>の<ruby><rb>掃除</rb><rt>そうじ</rt></ruby>の<ruby><rb>手順</rb><rt>てじゅん</rt></ruby>', 'C. レストランのメニュー'], explanation: '' },
+    { id: 37, text: '「バリアフリールーム」とはどんな<ruby><rb>部屋</rb><rt>へや</rt></ruby>ですか。', options: ['A. <ruby><rb>車</rb><rt>くるま</rt></ruby>いすの<ruby><rb>方</rb><rt>かた</rt></ruby>などが<ruby><rb>使</rb><rt>つか</rt></ruby>いやすいように<ruby><rb>作</rb><rt>つく</rt></ruby>られた<ruby><rb>部屋</rb><rt>へや</rt></ruby>', 'B. インターネットが<ruby><rb>使</rb><rt>つか</rt></ruby>える<ruby><rb>部屋</rb><rt>へや</rt></ruby>', 'C. <ruby><rb>特別</rb><rt>とくべつ</rt></ruby>に<ruby><rb>広</rb><rt>ひろ</rt></ruby>い<ruby><rb>部屋</rb><rt>へや</rt></ruby>'], explanation: '' },
+    { id: 38, text: '「<ruby><rb>館内放送</rb><rt>かんないほうそう</rt></ruby>」はどのように<ruby><rb>使</rb><rt>つか</rt></ruby>いますか。', options: ['A. お<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>や<ruby><rb>従業員</rb><rt>じゅうぎょういん</rt></ruby>に<ruby><rb>大切</rb><rt>たいせつ</rt></ruby>なお<ruby><rb>知</rb><rt>し</rt></ruby>らせを<ruby><rb>伝</rb><rt>つた</rt></ruby>える', 'B. <ruby><rb>音楽</rb><rt>おんがく</rt></ruby>を<ruby><rb>流</rb><rt>なが</rt></ruby>すためだけに<ruby><rb>使</rb><rt>つか</rt></ruby>う', 'C. <ruby><rb>従業員</rb><rt>じゅうぎょういん</rt></ruby>だけが<ruby><rb>聞</rb><rt>き</rt></ruby>く'], explanation: '' },
+    { id: 39, text: '「<ruby><rb>宿泊者</rb><rt>しゅくはくしゃ</rt></ruby>カード」に<ruby><rb>書</rb><rt>か</rt></ruby>く<ruby><rb>必要</rb><rt>ひつよう</rt></ruby>があるのはどれですか。', options: ['A. <ruby><rb>名前</rb><rt>なまえ</rt></ruby>、<ruby><rb>住所</rb><rt>じゅうしょ</rt></ruby>、<ruby><rb>連絡先</rb><rt>れんらくさき</rt></ruby>', 'B. <ruby><rb>部屋</rb><rt>へや</rt></ruby>の<ruby><rb>掃除方法</rb><rt>そうじほうほう</rt></ruby>', 'C. レストランの<ruby><rb>注文</rb><rt>ちゅうもん</rt></ruby>'], explanation: '' },
+    { id: 40, text: '「<ruby><rb>食事</rb><rt>しょくじ</rt></ruby>のラストオーダー」とは<ruby><rb>何</rb><rt>なに</rt></ruby>ですか。', options: ['A. <ruby><rb>注文</rb><rt>ちゅうもん</rt></ruby>を<ruby><rb>受</rb><rt>う</rt></ruby>け<ruby><rb>付</rb><rt>つ</rt></ruby>ける<ruby><rb>最後</rb><rt>さいご</rt></ruby>の<ruby><rb>時間</rb><rt>じかん</rt></ruby>', 'B. <ruby><rb>料理</rb><rt>りょうり</rt></ruby>を<ruby><rb>作</rb><rt>つく</rt></ruby>る<ruby><rb>時間</rb><rt>じかん</rt></ruby>', 'C. <ruby><rb>食事</rb><rt>しょくじ</rt></ruby>を<ruby><rb>片付</rb><rt>かたづ</rt></ruby>ける<ruby><rb>時間</rb><rt>じかん</rt></ruby>'], explanation: '' },
+    { id: 41, text: '「ランドリーサービス」とはどんなサービスですか。', options: ['A. <ruby><rb>衣服</rb><rt>いふく</rt></ruby>を<ruby><rb>洗濯</rb><rt>せんたく</rt></ruby>して<ruby><rb>仕上</rb><rt>しあ</rt></ruby>げるサービス', 'B. <ruby><rb>部屋</rb><rt>へや</rt></ruby>の<ruby><rb>掃除</rb><rt>そうじ</rt></ruby>をするサービス', 'C. <ruby><rb>荷物</rb><rt>にもつ</rt></ruby>を<ruby><rb>運</rb><rt>はこ</rt></ruby>ぶサービス'], explanation: '' },
+    { id: 42, text: '「チェックイン」のときに<ruby><rb>外国人</rb><rt>がいこくじん</rt></ruby>のお<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>が<ruby><rb>必要</rb><rt>ひつよう</rt></ruby>とするものは<ruby><rb>何</rb><rt>なに</rt></ruby>ですか。', options: ['A. パスポート', 'B. クレジットカード', 'C. <ruby><rb>航空券</rb><rt>こうくうけん</rt></ruby>'], explanation: '' },
+    { id: 42, text: '「<ruby><rb>団体客</rb><rt>だんたいきゃく</rt></ruby>」とはどんなお<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>ですか。', options: ['A. <ruby><rb>大人数</rb><rt>おおにんずう</rt></ruby>で<ruby><rb>一緒</rb><rt>いっしょ</rt></ruby>に<ruby><rb>宿泊</rb><rt>しゅくはく</rt></ruby>するお<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>', 'B. <ruby><rb>一人</rb><rt>ひとり</rt></ruby>で<ruby><rb>宿泊</rb><rt>しゅくはく</rt></ruby>するお<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>', 'C. <ruby><rb>家族</rb><rt>かぞく</rt></ruby>で<ruby><rb>宿泊</rb><rt>しゅくはく</rt></ruby>するお<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>'], explanation: '' },
+    { id: 44, text: '「<ruby><rb>浴衣</rb><rt>ゆかた</rt></ruby>」はいつ<ruby><rb>使</rb><rt>つか</rt></ruby>われますか。', options: ['A. <ruby><rb>宿泊時</rb><rt>しゅくはくじ</rt></ruby>に<ruby><rb>部屋</rb><rt>へや</rt></ruby>や<ruby><rb>温泉</rb><rt>おんせん</rt></ruby>で<ruby><rb>着</rb><rt>き</rt></ruby>る', 'B. <ruby><rb>結婚式</rb><rt>けっこんしき</rt></ruby>で<ruby><rb>着</rb><rt>き</rt></ruby>る', 'C. <ruby><rb>冬</rb><rt>ふゆ</rt></ruby>に<ruby><rb>外</rb><rt>そと</rt></ruby>で<ruby><rb>着</rb><rt>き</rt></ruby>る'], explanation: '' },
+    { id: 45, text: '「<ruby><rb>大浴場</rb><rt>だいよくじょう</rt></ruby>」を<ruby><rb>利用</rb><rt>りよう</rt></ruby>するときに<ruby><rb>守</rb><rt>まも</rt></ruby>るべきマナーはどれですか。', options: ['A. <ruby><rb>入</rb><rt>はい</rt></ruby>る<ruby><rb>前</rb><rt>まえ</rt></ruby>に<ruby><rb>体</rb><rt>からだ</rt></ruby>を<ruby><rb>洗</rb><rt>あら</rt></ruby>う', 'B. タオルを<ruby><rb>浴槽</rb><rt>よくそう</rt></ruby>の<ruby><rb>中</rb><rt>なか</rt></ruby>に<ruby><rb>入</rb><rt>い</rt></ruby>れる', 'C. <ruby><rb>浴槽</rb><rt>よくそう</rt></ruby>の<ruby><rb>中</rb><rt>なか</rt></ruby>で<ruby><rb>髪</rb><rt>かみ</rt></ruby>を<ruby><rb>洗</rb><rt>あら</rt></ruby>う'], explanation: '' },
+    { id: 46, text: '「<ruby><rb>部屋</rb><rt>へや</rt></ruby>の<ruby><rb>鍵</rb><rt>かぎ</rt></ruby>」をなくしたとき、まずどうすればいいですか。', options: ['A. フロントにすぐ<ruby><rb>報告</rb><rt>ほうこく</rt></ruby>する', 'B. <ruby><rb>自分</rb><rt>じぶん</rt></ruby>で<ruby><rb>探</rb><rt>さが</rt></ruby>さずに<ruby><rb>帰</rb><rt>かえ</rt></ruby>る', 'C. <ruby><rb>新</rb><rt>あたら</rt></ruby>しい<ruby><rb>鍵</rb><rt>かぎ</rt></ruby>を<ruby><rb>勝手</rb><rt>かって</rt></ruby>に<ruby><rb>使</rb><rt>つか</rt></ruby>う'], explanation: '' },
+    { id: 47, text: '「<ruby><rb>忘</rb><rt>わす</rt></ruby>れ<ruby><rb>物</rb><rt>もの</rt></ruby>」を<ruby><rb>見</rb><rt>み</rt></ruby>つけたらどうしますか。', options: ['A. フロントに<ruby><rb>届</rb><rt>とど</rt></ruby>ける', 'B. そのまま<ruby><rb>置</rb><rt>お</rt></ruby>いておく', 'C. <ruby><rb>自分</rb><rt>じぶん</rt></ruby>で<ruby><rb>持</rb><rt>も</rt></ruby>ち<ruby><rb>帰</rb><rt>かえ</rt></ruby>る'], explanation: '' },
+    { id: 48, text: '「Wi-Fi<ruby><rb>利用案内</rb><rt>りようあんない</rt></ruby>」をお<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>に<ruby><rb>説明</rb><rt>せつめい</rt></ruby>するとき<ruby><rb>正</rb><rt>ただ</rt></ruby>しいのはどれですか。', options: ['A. SSIDとパスワードを<ruby><rb>伝</rb><rt>つた</rt></ruby>える', 'B. <ruby><rb>自分</rb><rt>じぶん</rt></ruby>のスマホを<ruby><rb>貸</rb><rt>か</rt></ruby>す', 'C. <ruby><rb>無料</rb><rt>むりょう</rt></ruby>Wi-Fiは<ruby><rb>使</rb><rt>つか</rt></ruby>えないと<ruby><rb>伝</rb><rt>つた</rt></ruby>える'], explanation: '' },
+    { id: 49, text: '「レイトチェックアウト」とは<ruby><rb>何</rb><rt>なに</rt></ruby>を<ruby><rb>意味</rb><rt>いみ</rt></ruby>しますか。', options: ['A. <ruby><rb>通常</rb><rt>つうじょう</rt></ruby>より<ruby><rb>遅</rb><rt>おそ</rt></ruby>い<ruby><rb>時間</rb><rt>じかん</rt></ruby>にチェックアウトできる', 'B. <ruby><rb>通常</rb><rt>つうじょう</rt></ruby>より<ruby><rb>早</rb><rt>はや</rt></ruby>くチェックアウトする', 'C. <ruby><rb>無料</rb><rt>むりょう</rt></ruby>で<ruby><rb>宿泊</rb><rt>しゅくはく</rt></ruby>を<ruby><rb>延長</rb><rt>えんちょう</rt></ruby>できる'], explanation: '' },
+    { id: 50, text: '「モーニングコール」とは<ruby><rb>何</rb><rt>なに</rt></ruby>ですか。', options: ['A. <ruby><rb>指定</rb><rt>してい</rt></ruby>された<ruby><rb>時間</rb><rt>じかん</rt></ruby>に<ruby><rb>電話</rb><rt>でんわ</rt></ruby>でお<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>を<ruby><rb>起</rb><rt>お</rt></ruby>こすサービス', 'B. <ruby><rb>朝食</rb><rt>ちょうしょく</rt></ruby>を<ruby><rb>部屋</rb><rt>へや</rt></ruby>に<ruby><rb>持</rb><rt>も</rt></ruby>って<ruby><rb>行</rb><rt>い</rt></ruby>くサービス', 'C. <ruby><rb>朝</rb><rt>あさ</rt></ruby>の<ruby><rb>掃除</rb><rt>そうじ</rt></ruby>サービス'], explanation: '' },
+    { id: 51, text: '「<ruby><rb>禁煙</rb><rt>きんえん</rt></ruby>ルーム」を<ruby><rb>希望</rb><rt>きぼう</rt></ruby>するお<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>にどう<ruby><rb>対応</rb><rt>たいおう</rt></ruby>しますか。', options: ['A. <ruby><rb>禁煙</rb><rt>きんえん</rt></ruby>ルームを<ruby><rb>案内</rb><rt>あんない</rt></ruby>する', 'B. <ruby><rb>喫煙所</rb><rt>きつえんじょ</rt></ruby>を<ruby><rb>案内</rb><rt>あんない</rt></ruby>する', 'C. <ruby><rb>喫煙</rb><rt>きつえん</rt></ruby>ルームを<ruby><rb>案内</rb><rt>あんない</rt></ruby>する'], explanation: '' },
+    { id: 52, text: '「チェックインカウンター」で<ruby><rb>行</rb><rt>おこな</rt></ruby>う<ruby><rb>作業</rb><rt>さぎょう</rt></ruby>はどれですか。', options: ['A. お<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>の<ruby><rb>予約確認</rb><rt>よやくかくにん</rt></ruby>や<ruby><rb>宿泊手続</rb><rt>しゅくはくてつづ</rt></ruby>き', 'B. <ruby><rb>客室</rb><rt>きゃくしつ</rt></ruby>の<ruby><rb>清掃</rb><rt>せいそう</rt></ruby>', 'C. <ruby><rb>料理</rb><rt>りょうり</rt></ruby>の<ruby><rb>調理</rb><rt>ちょうり</rt></ruby>'], explanation: '' },
+    { id: 53, text: '「エコ<ruby><rb>清掃</rb><rt>せいそう</rt></ruby>」とはどんな<ruby><rb>清掃</rb><rt>せいそう</rt></ruby>ですか。', options: ['A. タオルやシーツを<ruby><rb>毎日</rb><rt>まいにち</rt></ruby><ruby><rb>交換</rb><rt>こうかん</rt></ruby>しない<ruby><rb>清掃</rb><rt>せいそう</rt></ruby>', 'B. <ruby><rb>部屋</rb><rt>へや</rt></ruby>を<ruby><rb>掃除</rb><rt>そうじ</rt></ruby>しない', 'C. <ruby><rb>ゴミ</rb><rt>ごみ</rt></ruby>を<ruby><rb>捨</rb><rt>す</rt></ruby>てない'], explanation: '' },
+    { id: 54, text: '「<ruby><rb>宿泊証明書</rb><rt>しゅくはくしょうめいしょ</rt></ruby>」は<ruby><rb>何</rb><rt>なに</rt></ruby>のために<ruby><rb>使</rb><rt>つか</rt></ruby>いますか。', options: ['A. <ruby><rb>宿泊</rb><rt>しゅくはく</rt></ruby>したことを<ruby><rb>証明</rb><rt>しょうめい</rt></ruby>するため', 'B. <ruby><rb>領収書</rb><rt>りょうしゅうしょ</rt></ruby>の<ruby><rb>代</rb><rt>か</rt></ruby>わり', 'C. パスポートの<ruby><rb>代</rb><rt>か</rt></ruby>わり'], explanation: '' },
+    { id: 55, text: '「<ruby><rb>予約</rb><rt>よやく</rt></ruby>なし」で<ruby><rb>来</rb><rt>き</rt></ruby>たお<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>はどのように<ruby><rb>対応</rb><rt>たいおう</rt></ruby>しますか。', options: ['A. <ruby><rb>空室</rb><rt>くうしつ</rt></ruby>があるかどうか<ruby><rb>確認</rb><rt>かくにん</rt></ruby>する', 'B. <ruby><rb>無条件</rb><rt>むじょうけん</rt></ruby>で<ruby><rb>泊</rb><rt>と</rt></ruby>める', 'C. <ruby><rb>泊</rb><rt>と</rt></ruby>めないと<ruby><rb>伝</rb><rt>つた</rt></ruby>える'], explanation: '' },
+    { id: 56, text: '「キャンセル<ruby><rb>料</rb><rt>りょう</rt></ruby>」とは<ruby><rb>何</rb><rt>なに</rt></ruby>ですか。', options: ['A. <ruby><rb>予約</rb><rt>よやく</rt></ruby>を<ruby><rb>取</rb><rt>と</rt></ruby>り<ruby><rb>消</rb><rt>け</rt></ruby>したときにかかる<ruby><rb>料金</rb><rt>りょうきん</rt></ruby>', 'B. <ruby><rb>部屋</rb><rt>へや</rt></ruby>の<ruby><rb>掃除代</rb><rt>そうじだい</rt></ruby>', 'C. <ruby><rb>食事代</rb><rt>しょくじだい</rt></ruby>'], explanation: '' },
+    { id: 57, text: '「<ruby><rb>朝食</rb><rt>ちょうしょく</rt></ruby>バイキング」とはどんな<ruby><rb>食事</rb><rt>しょくじ</rt></ruby>ですか。', options: ['A. お<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>が<ruby><rb>自由</rb><rt>じゆう</rt></ruby>に<ruby><rb>好</rb><rt>す</rt></ruby>きな<ruby><rb>料理</rb><rt>りょうり</rt></ruby>を<ruby><rb>選</rb><rt>えら</rt></ruby>んで<ruby><rb>食</rb><rt>た</rt></ruby>べる', 'B. <ruby><rb>決</rb><rt>き</rt></ruby>まった<ruby><rb>料理</rb><rt>りょうり</rt></ruby>が<ruby><rb>一</rb><rt>ひと</rt></ruby>つだけ<ruby><rb>出</rb><rt>で</rt></ruby>る', 'C. <ruby><rb>部屋</rb><rt>へや</rt></ruby>まで<ruby><rb>食事</rb><rt>しょくじ</rt></ruby>を<ruby><rb>運</rb><rt>はこ</rt></ruby>ぶ'], explanation: '' },
+    { id: 58, text: '「シャンプー・リンス・ボディソープ」をまとめて<ruby><rb>何</rb><rt>なに</rt></ruby>といいますか。', options: ['A. アメニティ', 'B. サービス', 'C. レンタル'], explanation: '' },
+    { id: 59, text: '「チェックアウト<ruby><rb>前</rb><rt>まえ</rt></ruby>」に<ruby><rb>部屋</rb><rt>へや</rt></ruby>で<ruby><rb>忘</rb><rt>わす</rt></ruby>れ<ruby><rb>物</rb><rt>もの</rt></ruby>をしないようにどう<ruby><rb>案内</rb><rt>あんない</rt></ruby>しますか。', options: ['A. <ruby><rb>忘</rb><rt>わす</rt></ruby>れ<ruby><rb>物</rb><rt>もの</rt></ruby>がないか<ruby><rb>確認</rb><rt>かくにん</rt></ruby>してから<ruby><rb>退室</rb><rt>たいしつ</rt></ruby>してください', 'B. <ruby><rb>忘</rb><rt>わす</rt></ruby>れ<ruby><rb>物</rb><rt>もの</rt></ruby>をしてもホテルが<ruby><rb>必</rb><rt>かなら</rt></ruby>ず<ruby><rb>保管</rb><rt>ほかん</rt></ruby>します', 'C. <ruby><rb>忘</rb><rt>わす</rt></ruby>れ<ruby><rb>物</rb><rt>もの</rt></ruby>はすべて<ruby><rb>捨</rb><rt>す</rt></ruby>てます'], explanation: '' },
+    { id: 60, text: '「<ruby><rb>冷蔵庫</rb><rt>れいぞうこ</rt></ruby>の<ruby><rb>中</rb><rt>なか</rt></ruby>の<ruby><rb>飲</rb><rt>の</rt></ruby>み<ruby><rb>物</rb><rt>もの</rt></ruby>」を<ruby><rb>利用</rb><rt>りよう</rt></ruby>した<ruby><rb>場合</rb><rt>ばあい</rt></ruby>どうなりますか。', options: ['A. チェックアウトのときに<ruby><rb>料金</rb><rt>りょうきん</rt></ruby>を<ruby><rb>支払</rb><rt>しはら</rt></ruby>う', 'B. <ruby><rb>無料</rb><rt>むりょう</rt></ruby>で<ruby><rb>飲</rb><rt>の</rt></ruby>める', 'C. <ruby><rb>自由</rb><rt>じゆう</rt></ruby>に<ruby><rb>持</rb><rt>も</rt></ruby>ち<ruby><rb>帰</rb><rt>かえ</rt></ruby>れる'], explanation: '' },
+    { id: 61, text: '「チェックイン<ruby><rb>時</rb><rt>じ</rt></ruby>」に<ruby><rb>宿泊</rb><rt>しゅくはく</rt></ruby>カードに<ruby><rb>記入</rb><rt>きにゅう</rt></ruby>するのはどれですか。', options: ['A. <ruby><rb>名前</rb><rt>なまえ</rt></ruby>・<ruby><rb>住所</rb><rt>じゅうしょ</rt></ruby>・<ruby><rb>連絡先</rb><rt>れんらくさき</rt></ruby>', 'B. <ruby><rb>好</rb><rt>す</rt></ruby>きな<ruby><rb>料理</rb><rt>りょうり</rt></ruby>', 'C. <ruby><rb>旅行</rb><rt>りょこう</rt></ruby>の<ruby><rb>目的</rb><rt>もくてき</rt></ruby>'], explanation: '' },
+    { id: 62, text: '「<ruby><rb>外出時</rb><rt>がいしゅつじ</rt></ruby>」に<ruby><rb>気</rb><rt>き</rt></ruby>を<ruby><rb>付</rb><rt>つ</rt></ruby>けるべきことはどれですか。', options: ['A. <ruby><rb>部屋</rb><rt>へや</rt></ruby>の<ruby><rb>鍵</rb><rt>かぎ</rt></ruby>を<ruby><rb>持</rb><rt>も</rt></ruby>って<ruby><rb>出</rb><rt>で</rt></ruby>る', 'B. <ruby><rb>部屋</rb><rt>へや</rt></ruby>の<ruby><rb>電気</rb><rt>でんき</rt></ruby>をつけっぱなしにする', 'C. <ruby><rb>貴重品</rb><rt>きちょうひん</rt></ruby>を<ruby><rb>机</rb><rt>つくえ</rt></ruby>の<ruby><rb>上</rb><rt>うえ</rt></ruby>に<ruby><rb>置</rb><rt>お</rt></ruby>いたままにする'], explanation: '' },
+    { id: 63, text: '「<ruby><rb>客室清掃</rb><rt>きゃくしつせいそう</rt></ruby>」で<ruby><rb>ゴミ</rb><rt>ごみ</rt></ruby>を<ruby><rb>処理</rb><rt>しょり</rt></ruby>するとき<ruby><rb>正</rb><rt>ただ</rt></ruby>しいのはどれですか。', options: ['A. <ruby><rb>指定</rb><rt>してい</rt></ruby>された<ruby><rb>袋</rb><rt>ふくろ</rt></ruby>に<ruby><rb>入</rb><rt>い</rt></ruby>れて<ruby><rb>回収</rb><rt>かいしゅう</rt></ruby>する', 'B. <ruby><rb>部屋</rb><rt>へや</rt></ruby>の<ruby><rb>隅</rb><rt>すみ</rt></ruby>にまとめて<ruby><rb>置</rb><rt>お</rt></ruby>く', 'C. ベッドの<ruby><rb>下</rb><rt>した</rt></ruby>に<ruby><rb>隠</rb><rt>かく</rt></ruby>す'], explanation: '' },
+    { id: 64, text: '「チェックアウト<ruby><rb>時</rb><rt>じ</rt></ruby>」に<ruby><rb>必要</rb><rt>ひつよう</rt></ruby>なことはどれですか。', options: ['A. <ruby><rb>料金</rb><rt>りょうきん</rt></ruby>を<ruby><rb>支払</rb><rt>しはら</rt></ruby>う', 'B. <ruby><rb>部屋</rb><rt>へや</rt></ruby>を<ruby><rb>掃除</rb><rt>そうじ</rt></ruby>する', 'C. <ruby><rb>鍵</rb><rt>かぎ</rt></ruby>を<ruby><rb>持</rb><rt>も</rt></ruby>ち<ruby><rb>帰</rb><rt>かえ</rt></ruby>る'], explanation: '' },
+    { id: 65, text: '「<ruby><rb>観光案内</rb><rt>かんこうあんない</rt></ruby>」を<ruby><rb>求</rb><rt>もと</rt></ruby>められたときの<ruby><rb>対応</rb><rt>たいおう</rt></ruby>はどれですか。', options: ['A. <ruby><rb>周辺</rb><rt>しゅうへん</rt></ruby>の<ruby><rb>観光地</rb><rt>かんこうち</rt></ruby>や<ruby><rb>交通手段</rb><rt>こうつうしゅだん</rt></ruby>を<ruby><rb>丁寧</rb><rt>ていねい</rt></ruby>に<ruby><rb>説明</rb><rt>せつめい</rt></ruby>する', 'B. <ruby><rb>自分</rb><rt>じぶん</rt></ruby>の<ruby><rb>行</rb><rt>い</rt></ruby>きたい<ruby><rb>場所</rb><rt>ばしょ</rt></ruby>だけを<ruby><rb>勧</rb><rt>すす</rt></ruby>める', 'C. <ruby><rb>案内</rb><rt>あんない</rt></ruby>できないと<ruby><rb>断</rb><rt>ことわ</rt></ruby>る'], explanation: '' },
+    { id: 66, text: '「ルームキー」はどのように<ruby><rb>扱</rb><rt>あつか</rt></ruby>うべきですか。', options: ['A. <ruby><rb>外出</rb><rt>がいしゅつ</rt></ruby>の<ruby><rb>際</rb><rt>さい</rt></ruby>はフロントに<ruby><rb>預</rb><rt>あず</rt></ruby>ける<ruby><rb>場合</rb><rt>ばあい</rt></ruby>がある', 'B. なくしたらそのままにする', 'C. 他のお<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>に<ruby><rb>貸</rb><rt>か</rt></ruby>す'], explanation: ''},
+    { id: 66, text: '「ルームキー」はどのように<ruby><rb>扱</rb><rt>あつか</rt></ruby>うべきですか。', options: ['A. <ruby><rb>外出</rb><rt>がいしゅつ</rt></ruby>の<ruby><rb>際</rb><rt>さい</rt></ruby>はフロントに<ruby><rb>預</rb><rt>あず</rt></ruby>ける<ruby><rb>場合</rb><rt>ばあい</rt></ruby>がある', 'B. なくしたらそのままにする', 'C. 他のお<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>に<ruby><rb>貸</rb><rt>か</rt></ruby>す'], explanation: '' },
+    { id: 67, text: '「<ruby><rb>門限</rb><rt>もんげん</rt></ruby>」とは<ruby><rb>何</rb><rt>なに</rt></ruby>を<ruby><rb>意味</rb><rt>いみ</rt></ruby>しますか。', options: ['A. <ruby><rb>出入</rb><rt>でい</rt></ruby>りができる<ruby><rb>最終</rb><rt>さいしゅう</rt></ruby>の<ruby><rb>時間</rb><rt>じかん</rt></ruby>', 'B. <ruby><rb>朝食</rb><rt>ちょうしょく</rt></ruby>の<ruby><rb>時間</rb><rt>じかん</rt></ruby>', 'C. チェックアウトの<ruby><rb>時間</rb><rt>じかん</rt></ruby>'], explanation: '' },
+    { id: 68, text: '「<ruby><rb>清掃中</rb><rt>せいそうちゅう</rt></ruby>」の<ruby><rb>札</rb><rt>ふだ</rt></ruby>がかかっている<ruby><rb>部屋</rb><rt>へや</rt></ruby>はどうなっていますか。', options: ['A. <ruby><rb>清掃員</rb><rt>せいそういん</rt></ruby>が<ruby><rb>掃除</rb><rt>そうじ</rt></ruby>している', 'B. お<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>が<ruby><rb>利用中</rb><rt>りようちゅう</rt></ruby>である', 'C. <ruby><rb>空室</rb><rt>くうしつ</rt></ruby>である'], explanation: '' },
+    { id: 69, text: '「<ruby><rb>貴重品</rb><rt>きちょうひん</rt></ruby>」を<ruby><rb>部屋</rb><rt>へや</rt></ruby>に<ruby><rb>置</rb><rt>お</rt></ruby>いたままにしないようにする<ruby><rb>理由</rb><rt>りゆう</rt></ruby>はどれですか。', options: ['A. <ruby><rb>紛失</rb><rt>ふんしつ</rt></ruby>や<ruby><rb>盗難</rb><rt>とうなん</rt></ruby>の<ruby><rb>危険</rb><rt>きけん</rt></ruby>がある', 'B. <ruby><rb>部屋</rb><rt>へや</rt></ruby>が<ruby><rb>狭</rb><rt>せま</rt></ruby>くなる', 'C. エアコンが<ruby><rb>使</rb><rt>つか</rt></ruby>えなくなる'], explanation: '' },
+    { id: 70, text: '「<ruby><rb>宅配便</rb><rt>たくはいびん</rt></ruby>」の<ruby><rb>依頼</rb><rt>いらい</rt></ruby>を<ruby><rb>受</rb><rt>う</rt></ruby>けたとき、どう<ruby><rb>対応</rb><rt>たいおう</rt></ruby>しますか。', options: ['A. <ruby><rb>送</rb><rt>おく</rt></ruby>り<ruby><rb>状</rb><rt>じょう</rt></ruby>に<ruby><rb>住所</rb><rt>じゅうしょ</rt></ruby>などを<ruby><rb>書</rb><rt>か</rt></ruby>いてもらい、<ruby><rb>手続</rb><rt>てつづ</rt></ruby>きをする', 'B. <ruby><rb>自分</rb><rt>じぶん</rt></ruby>で<ruby><rb>荷物</rb><rt>にもつ</rt></ruby>を<ruby><rb>持</rb><rt>も</rt></ruby>って<ruby><rb>行</rb><rt>い</rt></ruby>く', 'C. <ruby><rb>荷物</rb><rt>にもつ</rt></ruby>を<ruby><rb>預</rb><rt>あず</rt></ruby>からない'], explanation: '' },
+    { id: 71, text: '「<ruby><rb>領収書</rb><rt>りょうしゅうしょ</rt></ruby>」を<ruby><rb>発行</rb><rt>はっこう</rt></ruby>するときに<ruby><rb>正</rb><rt>ただ</rt></ruby>しいのはどれですか。', options: ['A. <ruby><rb>金額</rb><rt>きんがく</rt></ruby>と<ruby><rb>日付</rb><rt>ひづけ</rt></ruby>を<ruby><rb>正</rb><rt>ただ</rt></ruby>しく<ruby><rb>記入</rb><rt>きにゅう</rt></ruby>する', 'B. <ruby><rb>金額</rb><rt>きんがく</rt></ruby>を<ruby><rb>少</rb><rt>すく</rt></ruby>なく<ruby><rb>書</rb><rt>か</rt></ruby>く', 'C. <ruby><rb>名前</rb><rt>なまえ</rt></ruby>を<ruby><rb>書</rb><rt>か</rt></ruby>かない'], explanation: '' },
+    { id: 72, text: '「チェックイン<ruby><rb>前</rb><rt>まえ</rt></ruby>」に<ruby><rb>部屋</rb><rt>へや</rt></ruby>に<ruby><rb>入</rb><rt>はい</rt></ruby>れますか。', options: ['A. <ruby><rb>原則</rb><rt>げんそく</rt></ruby>、<ruby><rb>決</rb><rt>き</rt></ruby>められた<ruby><rb>時間以降</rb><rt>じかんいこう</rt></ruby>でなければ<ruby><rb>入</rb><rt>はい</rt></ruby>れない', 'B. <ruby><rb>必</rb><rt>かなら</rt></ruby>ず<ruby><rb>入</rb><rt>はい</rt></ruby>れる', 'C. <ruby><rb>追加料金</rb><rt>ついかりょうきん</rt></ruby>を<ruby><rb>払</rb><rt>はら</rt></ruby>わなくても<ruby><rb>自由</rb><rt>じゆう</rt></ruby>に<ruby><rb>入</rb><rt>はい</rt></ruby>れる'], explanation: '' },
+    { id: 73, text: '「<ruby><rb>会議室</rb><rt>かいぎしつ</rt></ruby>」を<ruby><rb>利用</rb><rt>りよう</rt></ruby>する<ruby><rb>場合</rb><rt>ばあい</rt></ruby>に<ruby><rb>必要</rb><rt>ひつよう</rt></ruby>なのはどれですか。', options: ['A. <ruby><rb>予約</rb><rt>よやく</rt></ruby>', 'B. <ruby><rb>宿泊</rb><rt>しゅくはく</rt></ruby>カード', 'C. ルームキー'], explanation: '' },
+    { id: 74, text: '「<ruby><rb>迷子</rb><rt>まいご</rt></ruby>」のお<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>や<ruby><rb>子</rb><rt>こ</rt></ruby>どもを<ruby><rb>見</rb><rt>み</rt></ruby>つけたとき、どう<ruby><rb>対応</rb><rt>たいおう</rt></ruby>しますか。', options: ['A. フロントや<ruby><rb>責任者</rb><rt>せきにんしゃ</rt></ruby>に<ruby><rb>連絡</rb><rt>れんらく</rt></ruby>する', 'B. <ruby><rb>自分</rb><rt>じぶん</rt></ruby>で<ruby><rb>連</rb><rt>つ</rt></ruby>れて<ruby><rb>帰</rb><rt>かえ</rt></ruby>る', 'C. そのままにする'], explanation: '' },
+    { id: 75, text: '「<ruby><rb>客室内</rb><rt>きゃくしつない</rt></ruby>の<ruby><rb>備品</rb><rt>びひん</rt></ruby>」の<ruby><rb>例</rb><rt>れい</rt></ruby>はどれですか。', options: ['A. テレビや<ruby><rb>冷蔵庫</rb><rt>れいぞうこ</rt></ruby>', 'B. レストランの<ruby><rb>料理</rb><rt>りょうり</rt></ruby>', 'C. エレベーター'], explanation: '' },
+    { id: 76, text: '「<ruby><rb>非常</rb><rt>ひじょう</rt></ruby>ベル」が<ruby><rb>鳴</rb><rt>な</rt></ruby>ったときにまずすることは<ruby><rb>何</rb><rt>なに</rt></ruby>ですか。', options: ['A. <ruby><rb>冷静</rb><rt>れいせい</rt></ruby>にお<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>を<ruby><rb>避難口</rb><rt>ひなんぐち</rt></ruby>へ<ruby><rb>案内</rb><rt>あんない</rt></ruby>する', 'B. <ruby><rb>大</rb><rt>おお</rt></ruby>きな<ruby><rb>声</rb><rt>こえ</rt></ruby>で<ruby><rb>叫</rb><rt>さけ</rt></ruby>ぶ', 'C. そのまま<ruby><rb>作業</rb><rt>さぎょう</rt></ruby>を<ruby><rb>続</rb><rt>つづ</rt></ruby>ける'], explanation: '' },
+    { id: 77, text: '「<ruby><rb>部屋番号</rb><rt>へやばんごう</rt></ruby>」を<ruby><rb>確認</rb><rt>かくにん</rt></ruby>するのはどんなときですか。', options: ['A. ルームキーを<ruby><rb>渡</rb><rt>わた</rt></ruby>すときや<ruby><rb>清掃</rb><rt>せいそう</rt></ruby>のとき', 'B. <ruby><rb>食事</rb><rt>しょくじ</rt></ruby>をするとき', 'C. チェックアウト<ruby><rb>後</rb><rt>ご</rt></ruby>'], explanation: '' },
+    { id: 78, text: '「クリーニングサービス」とは<ruby><rb>何</rb><rt>なに</rt></ruby>をするサービスですか。', options: ['A. <ruby><rb>衣服</rb><rt>いふく</rt></ruby>を<ruby><rb>専門業者</rb><rt>せんもんぎょうしゃ</rt></ruby>に<ruby><rb>出</rb><rt>だ</rt></ruby>して<ruby><rb>洗濯</rb><rt>せんたく</rt></ruby>・<ruby><rb>仕上</rb><rt>しあ</rt></ruby>げする', 'B. <ruby><rb>部屋</rb><rt>へや</rt></ruby>を<ruby><rb>掃除</rb><rt>そうじ</rt></ruby>する', 'C. <ruby><rb>荷物</rb><rt>にもつ</rt></ruby>を<ruby><rb>預</rb><rt>あず</rt></ruby>かる'], explanation: '' },
+    { id: 79, text: '「<ruby><rb>宿泊税</rb><rt>しゅくはくぜい</rt></ruby>」とは<ruby><rb>何</rb><rt>なに</rt></ruby>ですか。', options: ['A. <ruby><rb>宿泊料金</rb><rt>しゅくはくりょうきん</rt></ruby>に<ruby><rb>加</rb><rt>くわ</rt></ruby>えてかかる<ruby><rb>税金</rb><rt>ぜいきん</rt></ruby>', 'B. <ruby><rb>食事代</rb><rt>しょくじだい</rt></ruby>のこと', 'C. <ruby><rb>掃除代</rb><rt>そうじだい</rt></ruby>のこと'], explanation: '' },
+    { id: 80, text: '「<ruby><rb>喫煙所</rb><rt>きつえんじょ</rt></ruby>」はどんな<ruby><rb>場所</rb><rt>ばしょ</rt></ruby>ですか。', options: ['A. タバコを<ruby><rb>吸</rb><rt>す</rt></ruby>ってもよい<ruby><rb>場所</rb><rt>ばしょ</rt></ruby>', 'B. タバコを<ruby><rb>買</rb><rt>か</rt></ruby>う<ruby><rb>場所</rb><rt>ばしょ</rt></ruby>', 'C. タバコを<ruby><rb>捨</rb><rt>す</rt></ruby>てる<ruby><rb>場所</rb><rt>ばしょ</rt></ruby>'], explanation: '' },
+    { id: 81, text: '「<ruby><rb>荷物預</rb><rt>にもつあず</rt></ruby>かりサービス」の<ruby><rb>説明</rb><rt>せつめい</rt></ruby>で<ruby><rb>正</rb><rt>ただ</rt></ruby>しいのはどれですか。', options: ['A. チェックイン<ruby><rb>前</rb><rt>まえ</rt></ruby>やチェックアウト<ruby><rb>後</rb><rt>ご</rt></ruby>に<ruby><rb>荷物</rb><rt>にもつ</rt></ruby>を<ruby><rb>預</rb><rt>あず</rt></ruby>けられる', 'B. <ruby><rb>荷物</rb><rt>にもつ</rt></ruby>を<ruby><rb>必</rb><rt>かなら</rt></ruby>ず<ruby><rb>部屋</rb><rt>へや</rt></ruby>に<ruby><rb>運</rb><rt>はこ</rt></ruby>んでくれる', 'C. <ruby><rb>荷物</rb><rt>にもつ</rt></ruby>を<ruby><rb>無料</rb><rt>むりょう</rt></ruby>で<ruby><rb>配送</rb><rt>はいそう</rt></ruby>してくれる'], explanation: '' },
+    { id: 82, text: '「トラブル<ruby><rb>対応</rb><rt>たいおう</rt></ruby>」で<ruby><rb>大切</rb><rt>たいせつ</rt></ruby>なのはどれですか。', options: ['A. <ruby><rb>迅速</rb><rt>じんそく</rt></ruby>で<ruby><rb>丁寧</rb><rt>ていねい</rt></ruby>に<ruby><rb>対応</rb><rt>たいおう</rt></ruby>する', 'B. <ruby><rb>無視</rb><rt>むし</rt></ruby>する', 'C. お<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>を<ruby><rb>責</rb><rt>せ</rt></ruby>める'], explanation: '' },
+    { id: 83, text: '「<ruby><rb>予約</rb><rt>よやく</rt></ruby>サイト」で<ruby><rb>予約</rb><rt>よやく</rt></ruby>されたお<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>が<ruby><rb>来</rb><rt>き</rt></ruby>たときの<ruby><rb>対応</rb><rt>たいおう</rt></ruby>はどれですか。', options: ['A. <ruby><rb>予約内容</rb><rt>よやくないよう</rt></ruby>を<ruby><rb>確認</rb><rt>かくにん</rt></ruby>する', 'B. <ruby><rb>予約</rb><rt>よやく</rt></ruby>は<ruby><rb>無効</rb><rt>むこう</rt></ruby>と<ruby><rb>伝</rb><rt>つた</rt></ruby>える', 'C. <ruby><rb>部屋</rb><rt>へや</rt></ruby>を<ruby><rb>案内</rb><rt>あんない</rt></ruby>しない'], explanation: '' },
+    { id: 84, text: '「<ruby><rb>大浴場</rb><rt>だいよくじょう</rt></ruby>」に<ruby><rb>入</rb><rt>はい</rt></ruby>る<ruby><rb>前</rb><rt>まえ</rt></ruby>に<ruby><rb>必要</rb><rt>ひつよう</rt></ruby>なことはどれですか。', options: ['A. <ruby><rb>体</rb><rt>からだ</rt></ruby>を<ruby><rb>洗</rb><rt>あら</rt></ruby>う', 'B. タオルを<ruby><rb>浴槽</rb><rt>よくそう</rt></ruby>に<ruby><rb>入</rb><rt>い</rt></ruby>れる', 'C. <ruby><rb>洋服</rb><rt>ようふく</rt></ruby>を<ruby><rb>着</rb><rt>き</rt></ruby>たまま<ruby><rb>入</rb><rt>はい</rt></ruby>る'], explanation: '' },
+    { id: 85, text: '「ペット<ruby><rb>同伴</rb><rt>どうはん</rt></ruby>プラン」とは<ruby><rb>何</rb><rt>なに</rt></ruby>ですか。', options: ['A. ペットと<ruby><rb>一緒</rb><rt>いっしょ</rt></ruby>に<ruby><rb>宿泊</rb><rt>しゅくはく</rt></ruby>できるプラン', 'B. ペットを<ruby><rb>預</rb><rt>あず</rt></ruby>かるプラン', 'C. ペットに<ruby><rb>餌</rb><rt>えさ</rt></ruby>をあげるプラン'], explanation: '' },
+    { id: 86, text: '「<ruby><rb>門限</rb><rt>もんげん</rt></ruby>」を<ruby><rb>過</rb><rt>す</rt></ruby>ぎて<ruby><rb>帰</rb><rt>かえ</rt></ruby>るとき、どうすればいいですか。', options: ['A. <ruby><rb>事前</rb><rt>じぜん</rt></ruby>にフロントに<ruby><rb>連絡</rb><rt>れんらく</rt></ruby>する', 'B. そのまま<ruby><rb>入</rb><rt>はい</rt></ruby>る', 'C. <ruby><rb>翌朝</rb><rt>よくあさ</rt></ruby>まで<ruby><rb>待</rb><rt>ま</rt></ruby>つ'], explanation: '' },
+    { id: 87, text: '「チェックアウト<ruby><rb>後</rb><rt>ご</rt></ruby>」に<ruby><rb>利用</rb><rt>りよう</rt></ruby>できるサービスはどれですか。', options: ['A. <ruby><rb>荷物</rb><rt>にもつ</rt></ruby>の<ruby><rb>預</rb><rt>あず</rt></ruby>かり', 'B. <ruby><rb>部屋</rb><rt>へや</rt></ruby>の<ruby><rb>利用</rb><rt>りよう</rt></ruby>', 'C. <ruby><rb>無料</rb><rt>むりょう</rt></ruby><ruby><rb>宿泊</rb><rt>しゅくはく</rt></ruby>'], explanation: '' },
+    { id: 88, text: '「<ruby><rb>宿泊</rb><rt>しゅくはく</rt></ruby>プラン」に<ruby><rb>含</rb><rt>ふく</rt></ruby>まれる<ruby><rb>内容</rb><rt>ないよう</rt></ruby>を<ruby><rb>確認</rb><rt>かくにん</rt></ruby>する<ruby><rb>理由</rb><rt>りゆう</rt></ruby>は<ruby><rb>何</rb><rt>なに</rt></ruby>ですか。', options: ['A. <ruby><rb>食事</rb><rt>しょくじ</rt></ruby>やサービスの<ruby><rb>有無</rb><rt>うむ</rt></ruby>が<ruby><rb>異</rb><rt>こと</rt></ruby>なるため', 'B. <ruby><rb>部屋</rb><rt>へや</rt></ruby>の<ruby><rb>掃除方法</rb><rt>そうじほうほう</rt></ruby>を<ruby><rb>決</rb><rt>き</rt></ruby>めるため', 'C. <ruby><rb>従業員</rb><rt>じゅうぎょういん</rt></ruby>の<ruby><rb>勤務時間</rb><rt>きんむじかん</rt></ruby>を<ruby><rb>決</rb><rt>き</rt></ruby>めるため'], explanation: '' },
+    { id: 89, text: '「チェックイン<ruby><rb>時間前</rb><rt>じかんまえ</rt></ruby>」に<ruby><rb>荷物</rb><rt>にもつ</rt></ruby>を<ruby><rb>預</rb><rt>あず</rt></ruby>けたいお<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>への<ruby><rb>対応</rb><rt>たいおう</rt></ruby>はどれですか。', options: ['A. <ruby><rb>荷物</rb><rt>にもつ</rt></ruby>をフロントで<ruby><rb>預</rb><rt>あず</rt></ruby>かる', 'B. <ruby><rb>預</rb><rt>あず</rt></ruby>かれないと<ruby><rb>断</rb><rt>ことわ</rt></ruby>る', 'C. <ruby><rb>部屋</rb><rt>へや</rt></ruby>に<ruby><rb>入</rb><rt>い</rt></ruby>れておく'], explanation: '' },
+    { id: 90, text: '「<ruby><rb>館内</rb><rt>かんない</rt></ruby>マップ」を<ruby><rb>渡</rb><rt>わた</rt></ruby>す<ruby><rb>理由</rb><rt>りゆう</rt></ruby>はどれですか。', options: ['A. <ruby><rb>館内</rb><rt>かんない</rt></ruby>の<ruby><rb>施設</rb><rt>しせつ</rt></ruby>や<ruby><rb>場所</rb><rt>ばしょ</rt></ruby>を<ruby><rb>分</rb><rt>わ</rt></ruby>かりやすくするため', 'B. お<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>に<ruby><rb>宿泊代</rb><rt>しゅくはくだい</rt></ruby>を<ruby><rb>説明</rb><rt>せつめい</rt></ruby>するため', 'C. <ruby><rb>掃除</rb><rt>そうじ</rt></ruby>の<ruby><rb>手順</rb><rt>てじゅん</rt></ruby>を<ruby><rb>示</rb><rt>しめ</rt></ruby>すため'], explanation: '' },
+    { id: 91, text: '「<ruby><rb>貸出</rb><rt>かしだ</rt></ruby>」サービスの<ruby><rb>例</rb><rt>れい</rt></ruby>はどれですか。', options: ['A. アイロンや<ruby><rb>加湿器</rb><rt>かしつき</rt></ruby>を<ruby><rb>貸</rb><rt>か</rt></ruby>す', 'B. <ruby><rb>食事</rb><rt>しょくじ</rt></ruby>を<ruby><rb>提供</rb><rt>ていきょう</rt></ruby>する', 'C. <ruby><rb>部屋</rb><rt>へや</rt></ruby>を<ruby><rb>掃除</rb><rt>そうじ</rt></ruby>する'], explanation: '' },
+    { id: 92, text: '「<ruby><rb>連泊</rb><rt>れんぱく</rt></ruby>」とは<ruby><rb>何</rb><rt>なに</rt></ruby>を<ruby><rb>意味</rb><rt>いみ</rt></ruby>しますか。', options: ['A. <ruby><rb>複数</rb><rt>ふくすう</rt></ruby>の<ruby><rb>日数</rb><rt>にっすう</rt></ruby><ruby><rb>続</rb><rt>つづ</rt></ruby>けて<ruby><rb>泊</rb><rt>と</rt></ruby>まること', 'B. <ruby><rb>予約</rb><rt>よやく</rt></ruby>をキャンセルすること', 'C. <ruby><rb>部屋</rb><rt>へや</rt></ruby>を<ruby><rb>変更</rb><rt>へんこう</rt></ruby>すること'], explanation: '' },
+    { id: 93, text: '「<ruby><rb>門限</rb><rt>もんげん</rt></ruby>」がないホテルでお<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>に<ruby><rb>伝</rb><rt>つた</rt></ruby>えるべきことはどれですか。', options: ['A. <ruby><rb>出入</rb><rt>でい</rt></ruby>りは<ruby><rb>自由</rb><rt>じゆう</rt></ruby>にできる', 'B. <ruby><rb>深夜</rb><rt>しんや</rt></ruby>は<ruby><rb>入</rb><rt>はい</rt></ruby>れない', 'C. <ruby><rb>朝</rb><rt>あさ</rt></ruby>しか<ruby><rb>出入</rb><rt>でい</rt></ruby>りできない'], explanation: '' },
+    { id: 94, text: '「<ruby><rb>大浴場</rb><rt>だいよくじょう</rt></ruby>」で<ruby><rb>走</rb><rt>はし</rt></ruby>ってはいけない<ruby><rb>理由</rb><rt>りゆう</rt></ruby>はどれですか。', options: ['A. <ruby><rb>滑</rb><rt>すべ</rt></ruby>って<ruby><rb>怪我</rb><rt>けが</rt></ruby>をする<ruby><rb>危険</rb><rt>きけん</rt></ruby>がある', 'B. うるさいから', 'C. お<ruby><rb>湯</rb><rt>ゆ</rt></ruby>が<ruby><rb>冷</rb><rt>ひ</rt></ruby>めるから'], explanation: '' },
+    { id: 95, text: '「ごみの<ruby><rb>分別</rb><rt>ぶんべつ</rt></ruby>」をする<ruby><rb>目的</rb><rt>もくてき</rt></ruby>はどれですか。', options: ['A. <ruby><rb>環境</rb><rt>かんきょう</rt></ruby>を<ruby><rb>守</rb><rt>まも</rt></ruby>るため', 'B. <ruby><rb>部屋</rb><rt>へや</rt></ruby>を<ruby><rb>広</rb><rt>ひろ</rt></ruby>くするため', 'C. <ruby><rb>電気代</rb><rt>でんきだい</rt></ruby>を<ruby><rb>節約</rb><rt>せつやく</rt></ruby>するため'], explanation: '' },
+    { id: 96, text: '「チェックアウトの<ruby><rb>流</rb><rt>なが</rt></ruby>れ」で<ruby><rb>正</rb><rt>ただ</rt></ruby>しいのはどれですか。', options: ['A. <ruby><rb>鍵</rb><rt>かぎ</rt></ruby>を<ruby><rb>返却</rb><rt>へんきゃく</rt></ruby>し、<ruby><rb>料金</rb><rt>りょうきん</rt></ruby>を<ruby><rb>支払</rb><rt>しはら</rt></ruby>う', 'B. <ruby><rb>部屋</rb><rt>へや</rt></ruby>を<ruby><rb>掃除</rb><rt>そうじ</rt></ruby>する', 'C. <ruby><rb>荷物</rb><rt>にもつ</rt></ruby>を<ruby><rb>置</rb><rt>お</rt></ruby>いていく'], explanation: '' },
+    { id: 97, text: '「<ruby><rb>門限</rb><rt>もんげん</rt></ruby>」がある<ruby><rb>宿泊施設</rb><rt>しゅくはくしせつ</rt></ruby>で<ruby><rb>守</rb><rt>まも</rt></ruby>らなければならないのはどれですか。', options: ['A. <ruby><rb>指定</rb><rt>してい</rt></ruby>された<ruby><rb>時間</rb><rt>じかん</rt></ruby>までに<ruby><rb>戻</rb><rt>もど</rt></ruby>る', 'B. <ruby><rb>好</rb><rt>す</rt></ruby>きな<ruby><rb>時間</rb><rt>じかん</rt></ruby>に<ruby><rb>戻</rb><rt>もど</rt></ruby>る', 'C. <ruby><rb>次</rb><rt>つぎ</rt></ruby>の<ruby><rb>日</rb><rt>ひ</rt></ruby>に<ruby><rb>戻</rb><rt>もど</rt></ruby>る'], explanation: '' },
+    { id: 98, text: '「<ruby><rb>部屋</rb><rt>へや</rt></ruby>の<ruby><rb>備品</rb><rt>びひん</rt></ruby>」が<ruby><rb>壊</rb><rt>こわ</rt></ruby>れているのを<ruby><rb>見</rb><rt>み</rt></ruby>つけたらどうしますか。', options: ['A. フロントや<ruby><rb>責任者</rb><rt>せきにんしゃ</rt></ruby>に<ruby><rb>報告</rb><rt>ほうこく</rt></ruby>する', 'B. そのまま<ruby><rb>使</rb><rt>つか</rt></ruby>う', 'C. <ruby><rb>自分</rb><rt>じぶん</rt></ruby>で<ruby><rb>修理</rb><rt>しゅうり</rt></ruby>する'], explanation: '' },
+    { id: 99, text: '「<ruby><rb>温泉</rb><rt>おんせん</rt></ruby>」に<ruby><rb>入</rb><rt>はい</rt></ruby>るときの<ruby><rb>注意</rb><rt>ちゅうい</rt></ruby>で<ruby><rb>正</rb><rt>ただ</rt></ruby>しいのはどれですか。', options: ['A. <ruby><rb>入</rb><rt>はい</rt></ruby>る<ruby><rb>前</rb><rt>まえ</rt></ruby>に<ruby><rb>体</rb><rt>からだ</rt></ruby>を<ruby><rb>洗</rb><rt>あら</rt></ruby>う', 'B. <ruby><rb>水着</rb><rt>みずぎ</rt></ruby>を<ruby><rb>着</rb><rt>き</rt></ruby>て<ruby><rb>入</rb><rt>はい</rt></ruby>る', 'C. タオルを<ruby><rb>浴槽</rb><rt>よくそう</rt></ruby>に<ruby><rb>入</rb><rt>い</rt></ruby>れる'], explanation: '' },
+    { id: 100, text: '「<ruby><rb>門限</rb><rt>もんげん</rt></ruby>」のある<ruby><rb>宿泊施設</rb><rt>しゅくはくしせつ</rt></ruby>で<ruby><rb>遅</rb><rt>おく</rt></ruby>れる<ruby><rb>場合</rb><rt>ばあい</rt></ruby>の<ruby><rb>対応</rb><rt>たいおう</rt></ruby>はどれですか。', options: ['A. <ruby><rb>事前</rb><rt>じぜん</rt></ruby>に<ruby><rb>連絡</rb><rt>れんらく</rt></ruby>する', 'B. そのまま<ruby><rb>入</rb><rt>はい</rt></ruby>る', 'C. <ruby><rb>翌朝</rb><rt>よくあさ</rt></ruby>まで<ruby><rb>外</rb><rt>そと</rt></ruby>で<ruby><rb>待</rb><rt>ま</rt></ruby>つ'], explanation: '' },
+    { id: 101, text: '「<ruby><rb>宿泊</rb><rt>しゅくはく</rt></ruby>カード」の<ruby><rb>記入項目</rb><rt>きにゅうこうもく</rt></ruby>で<ruby><rb>正</rb><rt>ただ</rt></ruby>しいのはどれですか。', options: ['A. <ruby><rb>名前</rb><rt>なまえ</rt></ruby>・<ruby><rb>住所</rb><rt>じゅうしょ</rt></ruby>・<ruby><rb>連絡先</rb><rt>れんらくさき</rt></ruby>', 'B. <ruby><rb>好</rb><rt>す</rt></ruby>きな<ruby><rb>食</rb><rt>た</rt></ruby>べ<ruby><rb>物</rb><rt>もの</rt></ruby>', 'C. <ruby><rb>趣味</rb><rt>しゅみ</rt></ruby>'], explanation: '' },
+    { id: 102, text: '「チェックアウト<ruby><rb>後</rb><rt>ご</rt></ruby>」に<ruby><rb>部屋</rb><rt>へや</rt></ruby>を<ruby><rb>使</rb><rt>つか</rt></ruby>いたいと<ruby><rb>言</rb><rt>い</rt></ruby>われたらどう<ruby><rb>対応</rb><rt>たいおう</rt></ruby>しますか。', options: ['A. <ruby><rb>原則</rb><rt>げんそく</rt></ruby><ruby><rb>利用</rb><rt>りよう</rt></ruby>できないと<ruby><rb>説明</rb><rt>せつめい</rt></ruby>する', 'B. <ruby><rb>無料</rb><rt>むりょう</rt></ruby>で<ruby><rb>利用</rb><rt>りよう</rt></ruby>させる', 'C. どの<ruby><rb>部屋</rb><rt>へや</rt></ruby>でも<ruby><rb>使</rb><rt>つか</rt></ruby>えると<ruby><rb>言</rb><rt>い</rt></ruby>う'], explanation: '' },
+    { id: 103, text: '「お<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>からの<ruby><rb>問</rb><rt>と</rt></ruby>い<ruby><rb>合</rb><rt>あ</rt></ruby>わせ」に<ruby><rb>対応</rb><rt>たいおう</rt></ruby>するとき<ruby><rb>大切</rb><rt>たいせつ</rt></ruby>なのはどれですか。', options: ['A. <ruby><rb>丁寧</rb><rt>ていねい</rt></ruby>に<ruby><rb>答</rb><rt>こた</rt></ruby>える', 'B. <ruby><rb>適当</rb><rt>てきとう</rt></ruby>に<ruby><rb>答</rb><rt>こた</rt></ruby>える', 'C. <ruby><rb>答</rb><rt>こた</rt></ruby>えない'], explanation: '' },
+    { id: 104, text: '「<ruby><rb>門限</rb><rt>もんげん</rt></ruby>」のないホテルで<ruby><rb>夜遅</rb><rt>よるおそ</rt></ruby>く<ruby><rb>帰</rb><rt>かえ</rt></ruby>るお<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>への<ruby><rb>注意</rb><rt>ちゅうい</rt></ruby>はどれですか。', options: ['A. 他のお<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>に<ruby><rb>迷惑</rb><rt>めいわく</rt></ruby>をかけないよう<ruby><rb>静</rb><rt>しず</rt></ruby>かにする', 'B. <ruby><rb>大</rb><rt>おお</rt></ruby>きな<ruby><rb>声</rb><rt>こえ</rt></ruby>で<ruby><rb>挨拶</rb><rt>あいさつ</rt></ruby>する', 'C. ドアを<ruby><rb>強</rb><rt>つよ</rt></ruby>く<ruby><rb>閉</rb><rt>し</rt></ruby>める'], explanation: '' },
+    { id: 105, text: '「<ruby><rb>荷物</rb><rt>にもつ</rt></ruby>が<ruby><rb>大</rb><rt>おお</rt></ruby>きいお<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>」にどんなサービスを<ruby><rb>提供</rb><rt>ていきょう</rt></ruby>できますか。', options: ['A. カートやスタッフが<ruby><rb>運</rb><rt>はこ</rt></ruby>ぶサービス', 'B. <ruby><rb>自分</rb><rt>じぶん</rt></ruby>で<ruby><rb>全部</rb><rt>ぜんぶ</rt></ruby><ruby><rb>持</rb><rt>も</rt></ruby>たせる', 'C. <ruby><rb>預</rb><rt>あず</rt></ruby>からない'], explanation: '' },
+    { id: 106, text: '「<ruby><rb>火災発生時</rb><rt>かさいはっせいじ</rt></ruby>」に<ruby><rb>従業員</rb><rt>じゅうぎょういん</rt></ruby>がまず<ruby><rb>行</rb><rt>おこな</rt></ruby>うことはどれですか。', options: ['A. <ruby><rb>非常</rb><rt>ひじょう</rt></ruby>ベルを<ruby><rb>押</rb><rt>お</rt></ruby>し、お<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>を<ruby><rb>避難誘導</rb><rt>ひなんゆうどう</rt></ruby>する', 'B. <ruby><rb>自分</rb><rt>じぶん</rt></ruby>だけ<ruby><rb>逃</rb><rt>に</rt></ruby>げる', 'C. <ruby><rb>何</rb><rt>なに</rt></ruby>もせずに'], explanation: '' },
+    { id: 107, text: '「チェックインの<ruby><rb>際</rb><rt>さい</rt></ruby>」<ruby><rb>外国人</rb><rt>がいこくじん</rt></ruby>のお<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>に<ruby><rb>必</rb><rt>かなら</rt></ruby>ず<ruby><rb>提示</rb><rt>ていじ</rt></ruby>してもらうものはどれですか。', options: ['A. パスポート', 'B. クレジットカード', 'C. <ruby><rb>航空券</rb><rt>こうくうけん</rt></ruby>'], explanation: '' },
+    { id: 108, text: '「<ruby><rb>門限</rb><rt>もんげん</rt></ruby>」がある<ruby><rb>場合</rb><rt>ばあい</rt></ruby>に<ruby><rb>守</rb><rt>まも</rt></ruby>る<ruby><rb>理由</rb><rt>りゆう</rt></ruby>はどれですか。', options: ['A. お<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>の<ruby><rb>安全</rb><rt>あんぜん</rt></ruby>を<ruby><rb>守</rb><rt>まも</rt></ruby>るため', 'B. <ruby><rb>従業員</rb><rt>じゅうぎょういん</rt></ruby>の<ruby><rb>都合</rb><rt>つごう</rt></ruby>のため', 'C. <ruby><rb>電気代</rb><rt>でんきだい</rt></ruby>を<ruby><rb>節約</rb><rt>せつやく</rt></ruby>するため'], explanation: '' },
+    { id: 109, text: '「<ruby><rb>宿泊施設</rb><rt>しゅくはくしせつ</rt></ruby>で<ruby><rb>働</rb><rt>はたら</rt></ruby>くスタッフ」に<ruby><rb>求</rb><rt>もと</rt></ruby>められる<ruby><rb>態度</rb><rt>たいど</rt></ruby>はどれですか。', options: ['A. <ruby><rb>礼儀正</rb><rt>れいぎただ</rt></ruby>しく<ruby><rb>丁寧</rb><rt>ていねい</rt></ruby>に<ruby><rb>対応</rb><rt>たいおう</rt></ruby>すること', 'B. <ruby><rb>自分</rb><rt>じぶん</rt></ruby>の<ruby><rb>気分</rb><rt>きぶん</rt></ruby>で<ruby><rb>対応</rb><rt>たいおう</rt></ruby>すること', 'C. お<ruby><rb>客様</rb><rt>きゃくさま</rt></ruby>を<ruby><rb>無視</rb><rt>むし</rt></ruby>すること'], explanation: '' }
+];
+        let startTime = null;
+        let timerInterval = null;
+        function normalizeString(str) {
+            return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '');
+        }
+        function getEvaluation(percentage) {
+            if (percentage >= 85) return 'A';
+            if (percentage >= 70) return 'B';
+            if (percentage >= 60) return 'C';
+            if (percentage >= 55) return 'D';
+            return 'F';
+        }
+        function generateQuestions() {
+            const questionSection = document.getElementById('question-section');
+            questionSection.innerHTML = '';
+            questions.forEach(q => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                questionDiv.innerHTML = `<p>${q.id}. ${q.text}</p>`;
+                if (q.type === 'radio' || !q.type) {
+                    const optionsDiv = document.createElement('div');
+                    optionsDiv.className = 'options';
+                    q.options.forEach((option, index) => {
+                        const optionValue = String.fromCharCode(65 + index);
+                        const optionDiv = document.createElement('div');
+                        optionDiv.className = 'option';
+                        optionDiv.innerHTML = `
+                            <input type="radio" name="q${q.id}" id="q${q.id}-${optionValue}" value="${optionValue}">
+                            <label for="q${q.id}-${optionValue}">${option}</label>
+                        `;
+                        optionsDiv.appendChild(optionDiv);
+                    });
+                    questionDiv.appendChild(optionsDiv);
+                } else if (q.type === 'text') {
+                    questionDiv.innerHTML += `
+                        <input type="text" id="q${q.id}" class="text-input">
+                    `;
+                }
+                questionDiv.innerHTML += `<div id="feedback-${q.id}" class="answer-feedback"></div>`;
+                questionSection.appendChild(questionDiv);
+            });
+        }
+        function calculateRadioSectionScore(startQuestion, endQuestion, pointsPerQuestion) {
+            let score = 0;
+            for (let i = startQuestion; i <= endQuestion; i++) {
+                const selectedOption = document.querySelector(`input[name="q${i}"]:checked`);
+                if (selectedOption) {
+                    const userAnswer = selectedOption.value;
+                    if (userAnswer === answerKey[i]) {
+                        score += pointsPerQuestion;
+                    }
+                    showRadioAnswerFeedback(i);
+                }
+            }
+            return score;
+        }
+        function calculateTextSectionScore(startQuestion, endQuestion, pointsPerQuestion) {
+            let score = 0;
+            for (let i = startQuestion; i <= endQuestion; i++) {
+                const userAnswer = document.getElementById(`q${i}`).value.trim();
+                if (userAnswer) {
+                    const normalizedUserAnswer = normalizeString(userAnswer);
+                    const normalizedCorrectAnswer = normalizeString(answerKey[i]);
+                    if (normalizedUserAnswer === normalizedCorrectAnswer) {
+                        score += pointsPerQuestion;
+                    }
+                    showTextAnswerFeedback(i);
+                }
+            }
+            return score;
+        }
+        function showRadioAnswerFeedback(questionNumber) {
+            const feedbackElement = document.getElementById(`feedback-${questionNumber}`);
+            const selectedOption = document.querySelector(`input[name="q${questionNumber}"]:checked`);
+            if (!selectedOption) {
+                feedbackElement.textContent = 'Bạn chưa chọn đáp án.';
+                feedbackElement.classList.add('wrong');
+                return;
+            }
+            const userAnswer = selectedOption.value;
+            if (userAnswer === answerKey[questionNumber]) {
+                feedbackElement.textContent = 'Đúng!';
+                feedbackElement.classList.remove('wrong');
+            } else {
+                feedbackElement.textContent = `Sai. Đáp án đúng là: ${answerKey[questionNumber]}`;
+                feedbackElement.classList.add('wrong');
+            }
+        }
+        function showTextAnswerFeedback(questionNumber) {
+            const feedbackElement = document.getElementById(`feedback-${questionNumber}`);
+            const userAnswer = document.getElementById(`q${questionNumber}`).value.trim();
+            if (!userAnswer) {
+                feedbackElement.textContent = 'Bạn chưa nhập câu trả lời.';
+                feedbackElement.classList.add('wrong');
+                return;
+            }
+            const normalizedUserAnswer = normalizeString(userAnswer);
+            const normalizedCorrectAnswer = normalizeString(answerKey[questionNumber]);
+            if (normalizedUserAnswer === normalizedCorrectAnswer) {
+                feedbackElement.textContent = 'Đúng!';
+                feedbackElement.classList.remove('wrong');
+            } else {
+                feedbackElement.textContent = `Sai. Đáp án đúng là: ${answerKey[questionNumber]}`;
+                feedbackElement.classList.add('wrong');
+            }
+        }
+        function formatTime(date) {
+            return date.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        }
+        function startTimer() {
+            startTime = new Date();
+            const endTime = new Date(startTime.getTime() + 60 * 60 * 1000);
+            const timerElement = document.getElementById('timer');
+            timerInterval = setInterval(() => {
+                const now = new Date();
+                const timeLeft = endTime - now;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    timerElement.textContent = 'Hết giờ!';
+                    timerElement.classList.add('warning');
+                    submitTest();
+                    return;
+                }
+                const minutes = Math.floor(timeLeft / 1000 / 60);
+                const seconds = Math.floor((timeLeft / 1000) % 60);
+                timerElement.textContent = `Thời gian còn lại: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                if (timeLeft <= 5 * 60 * 1000) {
+                    timerElement.classList.add('warning');
+                }
+            }, 1000);
+        }
+        function checkPassword() {
+            const passwordInput = document.getElementById('password-input').value.trim();
+            const passwordError = document.getElementById('password-error');
+            if (passwordInput === '112') {
+                window.location.href = 'history.html';
+            } else {
+                passwordError.textContent = 'Mật khẩu không đúng. Vui lòng thử lại.';
+                document.getElementById('password-input').value = '';
+            }
+        }
+        function showPasswordModal() {
+            document.getElementById('password-modal').style.display = 'flex';
+            document.getElementById('password-input').focus();
+        }
+        function closePasswordModal() {
+            document.getElementById('password-modal').style.display = 'none';
+            document.getElementById('password-input').value = '';
+            document.getElementById('password-error').textContent = '';
+        }
+        window.checkPassword = checkPassword;
+        window.showPasswordModal = showPasswordModal;
+        window.closePasswordModal = closePasswordModal;
+        window.resetTest = resetTest;
+        async function submitTest() {
+            const endTime = new Date();
+            const name = document.getElementById('name').value.trim();
+            const className = document.getElementById('class').value.trim();
+            const dateInput = document.getElementById('date').value;
+            const messageResult = document.getElementById('message-result');
+            const resultSection = document.getElementById('results');
+            const scoreDisplay = document.getElementById('score-display');
+            if (!name || !className || !dateInput) {
+                messageResult.textContent = 'Vui lòng điền đầy đủ thông tin cá nhân.';
+                return;
+            }
+            clearInterval(timerInterval);
+            document.getElementById('timer').style.display = 'none';
+            document.getElementById('submit-test').style.display = 'none';
+            const section1Score = calculateRadioSectionScore(1, 109, 1);
+            const totalRawScore = section1Score || 0;
+            const percentage = (totalRawScore / 109) * 100 || 0;
+            const totalScore = Math.round(percentage) || 0;
+            const evaluation = getEvaluation(percentage);
+            const rankClass = evaluation === 'A' ? 'rank-a' : evaluation === 'F' ? 'rank-f' : '';
+            console.log('Total Raw Score:', totalRawScore, 'Percentage:', percentage, 'Section1 Score:', section1Score);
+            const resultTable = `
+                <table class="result-table">
+                    <thead>
+                        <tr>
+                            <th>Tên</th>
+                            <th>Lớp</th>
+                            <th>Ngày</th>
+                            <th>Bắt đầu</th>
+                            <th>Kết thúc</th>
+                            <th>Tổng điểm</th>
+                            <th>Tỷ lệ</th>
+                            <th>Xếp loại</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>${name || 'Chưa có'}</td>
+                            <td>${className || 'Chưa có'}</td>
+                            <td>${dateInput || new Date().toLocaleDateString('vi-VN')}</td>
+                            <td>${formatTime(startTime) || '00:00:00'}</td>
+                            <td>${formatTime(endTime) || '00:00:00'}</td>
+                            <td>${totalRawScore}/109</td>
+                            <td>${Math.round(percentage)}%</td>
+                            <td><span class="${rankClass || 'rank-f'}">${evaluation || 'F'}</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="reset" onclick="window.resetTest()">Làm lại</button>
+            `;
+            scoreDisplay.innerHTML = resultTable;
+            resultSection.style.display = 'block';
+            const firestoreDoc = {
+                startTime: formatTime(startTime) || '00:00:00',
+                endTime: formatTime(endTime) || '00:00:00',
+                date: dateInput || new Date().toLocaleDateString('vi-VN'),
+                name: name || 'Chưa có',
+                className: className || 'Chưa có',
+                section: section1Score || 0,
+                totalScore: totalRawScore || 0,
+                percentage: percentage || 0,
+                evaluation: evaluation || 'F',
+                timestamp: new Date()
+            };
+            let isValid = true;
+            for (const [key, value] of Object.entries(firestoreDoc)) {
+                if (value === undefined || value === null) {
+                    console.error(`Invalid Firestore data: ${key} is ${value}`);
+                    isValid = false;
+                }
+            }
+            if (!isValid) {
+                messageResult.textContent = 'Dữ liệu không hợp lệ. Kết quả đã được lưu cục bộ.';
+            } else {
+                try {
+                    await addDoc(collection(db, 'testHistorytuvungluutru2'), firestoreDoc);
+                    messageResult.textContent = 'Kết quả đã được lưu thành công!';
+                } catch (error) {
+                    console.error('Lỗi khi lưu vào Firestore:', error);
+                    let errorMessage = 'Đã xảy ra lỗi khi lưu kết quả vào Firestore. Kết quả đã được lưu cục bộ.';
+                    if (error.code) {
+                        switch (error.code) {
+                            case 'permission-denied':
+                                errorMessage = 'Không có quyền lưu kết quả vào Firestore. Vui lòng kiểm tra cấu hình bảo mật.';
+                                break;
+                            case 'unavailable':
+                                errorMessage = 'Không thể kết nối với Firestore. Vui lòng kiểm tra kết nối mạng.';
+                                break;
+                            case 'resource-exhausted':
+                                errorMessage = 'Đã vượt quá giới hạn Firestore. Vui lòng kiểm tra hạn mức dự án.';
+                                break;
+                            default:
+                                errorMessage += ` (Mã lỗi: ${error.code})`;
+                        }
+                    }
+                    messageResult.textContent = errorMessage;
+                }
+            }
+            const testHistory = JSON.parse(localStorage.getItem('testHistorytuvungluutru2') || '[]');
+            testHistory.push(firestoreDoc);
+            localStorage.setItem('testHistorytuvungluutru2', JSON.stringify(testHistory));
+        }
+        function resetTest() {
+            document.getElementById('name').value = '';
+            document.getElementById('class').value = '';
+            document.getElementById('date').value = new Date().toISOString().split('T')[0];
+            document.getElementById('message-info').textContent = '';
+            document.getElementById('message-result').textContent = '';
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('score-display').innerHTML = '';
+            document.getElementById('timer').style.display = 'none';
+            document.getElementById('submit-test').style.display = 'none';
+            document.getElementById('start-test').style.display = 'inline-block';
+            document.getElementById('history-test').style.display = 'inline-block';
+            document.querySelectorAll('.question-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            document.querySelectorAll('input[type="radio"]').forEach(input => {
+                input.checked = false;
+            });
+            document.querySelectorAll('input[type="text"]').forEach(input => {
+                input.value = '';
+            });
+            document.querySelectorAll('.answer-feedback').forEach(feedback => {
+                feedback.textContent = '';
+                feedback.classList.remove('wrong');
+            });
+            clearInterval(timerInterval);
+        }
+        document.getElementById('start-test').addEventListener('click', () => {
+            const name = document.getElementById('name').value.trim();
+            const className = document.getElementById('class').value.trim();
+            const dateInput = document.getElementById('date').value;
+            const messageInfo = document.getElementById('message-info');
+            if (!name || !className || !dateInput) {
+                messageInfo.textContent = 'Vui lòng điền đầy đủ thông tin: Tên, Lớp, và Ngày.';
+                return;
+            }
+            messageInfo.textContent = '';
+            document.getElementById('start-test').style.display = 'none';
+            document.getElementById('history-test').style.display = 'none';
+            document.querySelectorAll('.question-section').forEach(section => {
+                section.style.display = 'block';
+            });
+            document.getElementById('submit-test').style.display = 'block';
+            document.getElementById('timer').style.display = 'block';
+            generateQuestions();
+            startTimer();
+        });
+        document.getElementById('submit-test').addEventListener('click', submitTest);
+    </script>
+</body>
+</html>
